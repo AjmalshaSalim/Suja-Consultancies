@@ -31,20 +31,18 @@ font-weight: 200; */
     font-family: 'Poppins',sans-serif;
     font-weight: 200;
   }
-  .img-h2{
-    font-family:Poppins',sans-serif;
-  }
+  
   .font-big{
     font-size: 110% !important;
     font-weight: 300;
   }
  
 .danger{
-    color: #b51b39;
+    color: #1b61a6;
 }
 .container-1 {
 
-    background-color: rgba(255, 255, 255, 0.932);
+    background: #fff;
     z-index: 999 !important;
     /* box-shadow: 1px 3px 2px 2px rgb(107, 107, 107);
     border-bottom-left-radius: 10px;
@@ -60,6 +58,7 @@ font-weight: 200; */
 	border-radius: .25rem;
 	transition: box-shadow .15s ease-in-out;
 }
+
 .btn-whatsapp{
     font-weight: 500 !important;
 }
@@ -71,11 +70,11 @@ box-shadow: none;
     width:25%;
 }
 .toogle-icon{
-    color: #b51b39;
+    color: #1b61a6;
     font-size: x-large;
 }
 .brand-logo {
-    width: 40%;
+    width: 70px;
 }
 .logout-ul{
 margin-bottom: 0rem !important;
@@ -86,24 +85,21 @@ padding-left: 0rem !important;
 }
 .nav-link {
     color: black;
-    font-weight: 400;
+    font-weight: 900;
     font-family: 'Poppins',sans-serif;
     font-size: medium;
-    background-color: #fff;
+    width:110px;
 
 }
 
 .nav-link:hover {
-    color: #b51b39 !important;
-    border-bottom: 3px solid #b51b39;
-    font-weight: 600;
+    color: #1b61a6 !important;
+    font-weight: 900;
 }
 
 .dropdown-link:hover {
-    color: #b51b39;
-    background-color: #f4de1a;
-    border-bottom: 1px dashed #b51b39;
-    text-align: center;
+    color: #1b61a6;
+    font-weight:700;
 }
 
 .dropdown-bg {
@@ -447,7 +443,7 @@ margin-bottom: 10px !important;
   }
   .nav-item{
     border: 1px solid #00000000;
-    box-shadow:#0000002c 2px 10px 10px 0px !important; 
+    /* box-shadow:#0000002c 2px 10px 10px 0px !important;  */
     height: 45px;
     width: 110px;
     margin-left: 3px;
@@ -567,7 +563,7 @@ margin-bottom: 10px !important;
     display: block;
 }
 .job-h3:hover{
-    color: #b51b39 !important;
+    color: #1b61a6 !important;
 }
 .choose-card{
     height: 100%;
@@ -594,7 +590,7 @@ color: #000000a4;
 }
 .copyright-text{
     color: white !important;
-    background-color: #b90404 !important ;
+    background-color: #1b61a6 !important ;
 }
 .copyright-text-a{
     color: white !important;
@@ -618,10 +614,10 @@ color: #000000a4;
     height: 3rem;
 }
 .counter-section{
-    background-color: #F9F2B4  !important;
+    background-color: #1b61a6  !important;
 }
 .counter-span{
-    color: #C20606 !important;
+    color: #fff !important;
 }
 .footer-social{
     text-align: center;
@@ -642,21 +638,23 @@ background-repeat: no-repeat;
 background-size: cover;
 }
 .carosel-head{
-	margin-left: 5%;
-	margin-top: 10%!important;
+	margin-left: 20%;
+  text-align:center;
+  margin-right:auto;
+	margin-top: 11%!important;
     margin-bottom: 20% !important;
     font-family: "Suranna", serif;
   font-weight: 500;
-    letter-spacing: 10px;
+    letter-spacing: 5px;
     animation-name: animate;
     animation-duration: 5s;
-    font-size: 280% !important;
+    font-size: 380% !important;
     color: white !important;
     z-index: 999 !important;
 }
 @keyframes animate {
-    0%{letter-spacing: 5px;}
-    100%{letter-spacing: 0px;}
+    0%{opacity: 0%;}
+    100%{opacity: 100%;}
 }
 .col-div{
     height: 50vh;
@@ -730,7 +728,7 @@ font-weight: 200;
     background-size: cover;
 }
 .log-color{
-    color: #b51b39;
+    color: #1b61a6;
 }
 .log-color :hover{
     color: #CD201F !important;
@@ -811,15 +809,14 @@ margin-right: 10px;
     border-radius: 50%;
 } */
 .full-nav{
-   background-color:#B51B39;
-   border-bottom:4px solid #f4de1a;
+   background-color:#1b61a6;
    font-size: small;
    /* animation: colorChange 5s infinite;
    transition: ease-in-out; */
 }
 /* @keyframes colorChange {
   0% {
-      background-color: #C10101;
+      background-color: #1b61a6;
   }
   33.33% {
       background-color: #b51b39;
@@ -828,18 +825,17 @@ margin-right: 10px;
       background-color: #EF3F0B;
   }
   100% {
-      background-color: #C10101;
+      background-color: #1b61a6;
   }
 } */
 
 .chat-toggle-container{
-width: 60px;
-height: 60px;
-background-color:#C10101;
+width: 56px;
+height: 56px;
+background-color:transparent;
 position: absolute;
-top: 450px;
-right: 2%;
-padding: 10px;
+top: 800%;
+right: 1.6%;
 border-radius: 100%;
 }
 .chat-toggle-container:hover{
@@ -847,8 +843,8 @@ border-radius: 100%;
   transition: 500ms;
 }
 .chat-toggle-icon{
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 65px;
   }
 .nav-social-a,.email-a,.phn-a,.nav-social-face,.nav-social-insta,.nav-social-call,.nav-social-email,.nav-social-whats,.nav-social-linked{
     color: #ffff;
@@ -881,7 +877,7 @@ border-radius: 100%;
    .footer-area{
     font-size: smaller !important;
     background-color: #fff !important;
-    background-image: url(../bg-video/footerAbstract.png);
+    background-image: url(../bg-video/sujaAbstract.png);
     background-size: cover;
    }
    .footer-section-2{
@@ -932,11 +928,12 @@ width: 30%;
 .job-card-two{
     height: 93% !important;
     border:1px solid #00000015;
-    box-shadow:#0000002c 2px 20px 20px 0px; 
+    transition:.5s !important;
+    box-shadow:#0000002c 2px 10px 20px 0px; 
     border-radius: 10px;
 }
 .job-card-two:hover{
-  box-shadow:#00000050 2px 25px 20px 0px; 
+  box-shadow:#00000050 2px 10px 20px 0px; 
 }
 .job-card{
     width: 100% !important;
