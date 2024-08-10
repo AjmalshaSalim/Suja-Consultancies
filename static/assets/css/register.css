@@ -1,5 +1,5 @@
 .frm-login,.frm-login-1{
-    /* border: 1px solid #f03f0c; */
+    /* border: 1px solid #1b61a6; */
     border-radius: 10px;
     width: 41%;
     text-align: center;
@@ -27,7 +27,7 @@
     margin-top: 10%;
 }
 .bg-div {
-    background-image: url('../images/bgone.jpg');
+    background-image: url('../bg-video/suja-abstract.png');
     background-size: cover;
     margin-top: -50px;
 }
@@ -55,10 +55,10 @@ body{
     overflow: hidden;
 }
 .reg-a{
-    color: #f03f0c;
+    color: #1b61a6;
 }
 .reg-a:hover{
-    color: #f3de19;
+    color: #3186db;
 }
 .register-div{
     margin-top: 5%;

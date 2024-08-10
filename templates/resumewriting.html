@@ -47,19 +47,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
 
-    <title>Agies web | Resume Writing</title>
+    <title>Suja Consultancies | Resume Writing</title>
 
-    <link rel="icon" type="image/png" href="{% static 'assets/img/Agies-logo-favi.ico' %}">
+    <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.ico' %}">
 
-         <!-- Google Fonts Questral -->
-         <link rel="preconnect" href="https://fonts.googleapis.com">
-         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-         <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
-         <!-- Google Fonts Poppins -->
-         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-             rel="stylesheet">
-         <!-- Google Fonts Kumbh Sans -->
-         <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+           <!-- Google Fonts  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
+    <style>
+        body, p, h3, a, span, p, button, ::placeholder{
+    /* font-family: "Josefin Sans", sans-serif !important; */
+    font-family: "Comfortaa", sans-serif !important;
+}
+.btn-special{
+  background:#1b61a6 !important;
+  color: #fff !important;
+}
+.btn-special:hover{
+    background:#3186db !important; 
+}
+.img-h2, .bg-h3{
+    font-family: "Paytone One", sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+.home-video-bg{
+    height:200px !important;
+}
+.d-table {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 10px;
+}
+    </style>
 
 </head>
 
@@ -91,24 +115,24 @@
     <nav-2>
         <div class="full-nav">
             <div class="container div-container">
-                <!-- <div class="nav-phn"> -->
-                <!-- <a class="phn-a" href="tel:+91918848686147"><i class="bi bi-telephone-outbound-fill nav-social-call"></i>+91918848686147</a> -->
-                <!-- </div> -->
+                <div class="nav-phn">
+                <a class="phn-a" href="tel:+91918848686147"><i class="bi bi-telephone-outbound-fill nav-social-call"></i>+91918848686147</a>
+                </div>
                 <div class="nav-mail-comb">
                     <div class="nav-mail">
-                        <!-- <a class="email-a" href="mailto:info@sujaconsultancies.in"><i class="bi bi-envelope-at-fill nav-social-email"></i>info@sujaconsultancies.in</a> -->
-                       <p class="nav-welcome-text">Welcome to Suja Consultancies: Empowering Talent, Enhancing Companies. Step into
-                            excellence with us.</p>
+                        <a class="email-a" href="mailto:info@sujaconsultancies.in"><i class="bi bi-envelope-at-fill nav-social-email"></i>info@sujaconsultancies.in</a>
+                        <!-- <p class="nav-welcome-text">Welcome to Suja Consultancies: Empowering Talent, Enhancing Companies. Step into
+                            excellence with us.</p> -->
 
                     </div>
-                    <!-- <div class="nav-social">
+                    <div class="nav-social">
                     <ul class="nav-social-ul" type="none">
                         <li class="nav-social-name"><a  class="nav-social-a" href="https://wa.link/sws14o"><i class="bi bi-whatsapp nav-social-whats"></i></a></li>
                         <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-instagram nav-social-insta"></i></a></li>
                         <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-linkedin nav-social-linked"></i></a></li>
                         <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-facebook nav-social-face"></i></a></li>
                     </ul>
-                </div> -->
+                </div>
                 </div>
             </div>
         </div>
@@ -134,14 +158,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'ageis_app:clients' %}">Clients</a>
                     </li>
-                    {% if user.is_authenticated %}
+                    <!-- {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'ageis_app:user_profile' %}">My Profile</a>
                     </li>
                     {% else %}
                     <p></p>
-                    {% endif %}
-                    <li class="nav-item dropdown">
+                    {% endif %} -->
+                    <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Services
@@ -152,7 +176,7 @@
                             <li><a class="dropdown-item dropdown-link"
                                     href="{% url 'ageis_app:interviewtips' %}">Interview Tips</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <!-- <li class="nav-item">
                         {% comment %} <a class="nav-link" href="{% url 'ageis_app:blogs' %}">Blog</a> {% endcomment %}
                     </li> -->
@@ -160,11 +184,20 @@
                         <a href="{% url 'ageis_app:contact_us' %}" class="nav-link">
                             Contact Us</a>
                     </li>
+                    <li class="nav-search">
+                        <div class="nav-search-box" style="width: 250px; height: 40px; background: #fff; display: flex; border: 1px solid #00000024; border-radius: 5px; margin-left: 25px;
+">
+                            <input href="" class="nav-search-input" placeholder="Search" style="border:none; margin-left:5px; outline:none;">
+                            <img src="../static/assets/icons/search.png" alt="" style="width:20px; height:20px; margin-top:7px; margin-left:7px; ">
+                                </input>
+                        </div>
+                        
+                    </li>
                 </ul>
                 <div class="chat-box" id="chat-box">
                     <div class="chat-box-head">
 
-                        <img class="logo-chat-box-1" src="{% static 'assets/images/Agies-logo.png' %}">
+                        <img class="logo-chat-box-1" src="{% static 'assets/images/suja.jpg' %}">
 
                         <h4 class="chat-h4">Chat with Suja Consultancies</h4>
                         <div id="close-btn"><i class="bi bi-x-square chat-close"></i></div>
@@ -191,7 +224,7 @@
                 </div>
                 <a class=" btn-hello " id="chatwithus">
                     <div class="chat-toggle-container">
-                        <img class="chat toggle-icon" src="../static/assets/images/chatboxred.png" alt="">
+                        <img class="chat toggle-icon" src="../static/assets/icons/whatsapp.png" alt="">
                     </div>
                 </a>
                 {% if not user.is_authenticated %}
@@ -204,7 +237,11 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <i class="bi bi-person-circle"></i>
+                                <!-- <i class="bi bi-person-circle"></i> -->
+                                 <div style="height: 100%; width: 40px; margin-top:-13%; padding-left: 20px;">
+                                    <img src="../static/assets/icons/profile.png" alt="" style="width: 40px; height:40px; bottom:15px;">
+                                 </div>
+                                 
                             </a>
                             {% if user.is_authenticated and not user.is_superuser %}
                             <ul class="dropdown-menu dropdown-bg" aria-labelledby="navbarDropdown">
@@ -282,7 +319,7 @@
             <div class="chat-box" id="chat-box-mob">
                 <div class="chat-box-head">
 
-                    <img class="logo-chat-box-1" src="{% static 'assets/images/Agies-logo.png' %}">
+                    <img class="logo-chat-box-1" src="{% static 'assets/images/suja.jpg' %}">
 
                     <h4 class="chat-h4">Chat with Suja Consultancies</h4>
                     <div id="close-btn-mob"><i class="bi bi-x-square chat-close"></i></div>
@@ -624,7 +661,7 @@
             </div>
             
         </div>
-        <a href="./payment.html" class="btn btn-danger resume-img-a resume-img-a-win "><i
+        <a href="./payment.html" class="btn btn-speciall resume-img-a resume-img-a-win "><i
                     class="bi bi-telephone-outbound me-3"></i>Enroll
                 Now</a>
     </div>
@@ -638,7 +675,7 @@
                     <div class="footer-widget">
                         <div class="footer-logo">
                             <a href="{% url 'ageis_app:index' %}">
-                                <img class="logo-footer" src="{% static 'assets/images/Agies-logo.png' %}" alt="logo">
+                                <img class="logo-footer" src="{% static 'assets/images/suja.jpg' %}" alt="logo">
                             </a>
                         </div>
                         <p class="text-dark brand-quoete text-center"><i>We make Recruitment enjoyable,
@@ -779,8 +816,8 @@
                 <a class="footer-sec2-a" href="privacy.html">Privacy and policy</a>
             </div>
         </div>
-        <p class="text-light">Copyright © is Proudly Owned by <a href="https://a2zalphabetsolutionz.com/"
-                class="copyright-text-a" target="_blank">A2Z Alphabet Solutionz PVT.LTD</a></p>
+        <p>Copyright © 2024<a href="https://trivlogic.com/" class="copyright-text-a"
+            target="_blank">Trivlogic Pvt Ltd.</a> All rights reserved.</p>
     </div>
 
     <section class="section-chat-box">
@@ -791,7 +828,7 @@
                         <div class="header-chat">
                             <div class="header-chat-box">
                                 <div class="logo-div-chat-box">
-                                    <img class="logo-chat-box" src="{% static 'assets/images/Agies-logo.png' %}">
+                                    <img class="logo-chat-box" src="{% static 'assets/images/suja.jpg' %}">
                                     <a href="#" class="close-btn-a"><i class="bi bi-x-square close-btn"></i></a>
                                 </div>
                                 <h2 class="h2-chat-box">Suja Consultancies ONLINE CHAT BOT</h2>

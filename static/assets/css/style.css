@@ -51,7 +51,7 @@ p {
   width: 120px;
   overflow: hidden;
 }
-#client-testmonial-paragraph{
+/* #client-testmonial-paragraph{
     text-align: justify;
     font-size: small;
     color: #707070;
@@ -59,12 +59,23 @@ p {
     line-height: 1.8;
     padding-left: 3%;
     padding-right: 3%;
+} */
+#client-testmonial-paragraph {
+  text-align: left;
+  font-size: small;
+  color: #707070;
+  line-height: 1.8;
+  margin-top: 15px;
+  font-style: italic;
+
 }
-#client-testimonial-detail-container{
+
+
+/* #client-testimonial-detail-container{
   overflow: scroll;
   margin-bottom: 25px;
   margin-top: -7%;
-}
+} */
 #job-detail-logo-img{
 height: 100%;
 }
@@ -716,7 +727,7 @@ h3 {
   font-weight:700
 }
 .counter-area .counter-text p {
-  color:#fff;
+  color:#1b61a6;
   font-weight:500;
   font-size:15px
 }
@@ -1240,7 +1251,7 @@ h3 {
 }
 .footer-widget li:hover{
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 .footer-area .footer-widget ul li a {
   color:#d3d3d3
@@ -1512,7 +1523,8 @@ body{
   z-index:-1;
 }
 .job-card-two {
-  background:#fff;
+  /* background:#f5f5f5; */
+  background: #fff;
   margin-bottom:30px;
   padding:40px 30px
 }
@@ -1602,7 +1614,7 @@ body{
   background: rgba(253, 248, 201, 0.8);
 }
 .counter-section .counter-text i {
-  color:#fff;
+  color:#3C84C5;
   font-size:60px
 }
 .counter-section .counter-text h2 {

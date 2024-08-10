@@ -41,9 +41,9 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <title>Agies web | About</title>
+    <title>Suja Consultancies | About</title>
 
-    <link rel="icon" type="image/png" href="{% static 'assets/img/Agies-logo-favi.ico' %}">
+    <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.ico' %}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
@@ -68,6 +68,17 @@
 }
 .img-h2, .bg-h3{
     font-family: "Paytone One", sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+.home-video-bg{
+    height:200px !important;
+}
+.d-table {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 10px;
 }
     </style>
 </head>
@@ -94,49 +105,28 @@
             </div>
         </div>
     </div>
-    <!-- <nav-2>
-        <div class="full-nav">
-          <div class="container div-container">
-            <div class="nav-phn">
-              <a class="phn-a" href="tel:+91918848686147"><i class="bi bi-telephone-outbound-fill nav-social-call"></i>+91918848686147</a>
-            </div>
-            <div class="nav-mail-comb">
-                <div class="nav-mail">
-                 <a class="email-a" href="mailto:info@sujaconsultancies.in"><i class="bi bi-envelope-at-fill nav-social-email"></i>info@sujaconsultancies.in</a>
-                </div>
-                <div class="nav-social">
-                    <ul class="nav-social-ul" type="none">
-                        <li class="nav-social-name"><a  class="nav-social-a" href="https://wa.link/sws14o"><i class="bi bi-whatsapp nav-social-whats"></i></a></li>
-                        <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-instagram nav-social-insta"></i></a></li>
-                        <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-linkedin nav-social-linked"></i></a></li>
-                        <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-facebook nav-social-face"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-          </div>
-        </div>
-     </nav-2> -->
+    
      <nav-2>
         <div class="full-nav">
             <div class="container div-container">
-                <!-- <div class="nav-phn"> -->
-                <!-- <a class="phn-a" href="tel:+91918848686147"><i class="bi bi-telephone-outbound-fill nav-social-call"></i>+91918848686147</a> -->
-                <!-- </div> -->
+                <div class="nav-phn">
+                <a class="phn-a" href="tel:+91918848686147"><i class="bi bi-telephone-outbound-fill nav-social-call"></i>+91918848686147</a>
+                </div>
                 <div class="nav-mail-comb">
                     <div class="nav-mail">
-                        <!-- <a class="email-a" href="mailto:info@sujaconsultancies.in"><i class="bi bi-envelope-at-fill nav-social-email"></i>info@sujaconsultancies.in</a> -->
-                       <p class="nav-welcome-text">Welcome to Suja Consultancies: Empowering Talent, Enhancing Companies. Step into
-                            excellence with us.</p>
+                        <a class="email-a" href="mailto:info@sujaconsultancies.in"><i class="bi bi-envelope-at-fill nav-social-email"></i>info@sujaconsultancies.in</a>
+                        <!-- <p class="nav-welcome-text">Welcome to Suja Consultancies: Empowering Talent, Enhancing Companies. Step into
+                            excellence with us.</p> -->
 
                     </div>
-                    <!-- <div class="nav-social">
+                    <div class="nav-social">
                     <ul class="nav-social-ul" type="none">
                         <li class="nav-social-name"><a  class="nav-social-a" href="https://wa.link/sws14o"><i class="bi bi-whatsapp nav-social-whats"></i></a></li>
                         <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-instagram nav-social-insta"></i></a></li>
                         <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-linkedin nav-social-linked"></i></a></li>
                         <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-facebook nav-social-face"></i></a></li>
                     </ul>
-                </div> -->
+                </div>
                 </div>
             </div>
         </div>
@@ -201,7 +191,7 @@
                 <div class="chat-box" id="chat-box">
                     <div class="chat-box-head">
 
-                        <img class="logo-chat-box-1" src="{% static 'assets/images/Agies-logo.png' %}">
+                        <img class="logo-chat-box-1" src="{% static 'assets/images/suja.jpg' %}">
 
                         <h4 class="chat-h4">Chat with Suja Consultancies</h4>
                         <div id="close-btn"><i class="bi bi-x-square chat-close"></i></div>
@@ -323,7 +313,7 @@
             <div class="chat-box" id="chat-box-mob">
                 <div class="chat-box-head">
 
-                    <img class="logo-chat-box-1" src="{% static 'assets/images/Agies-logo.png' %}">
+                    <img class="logo-chat-box-1" src="{% static 'assets/images/suja.jpg' %}">
 
                     <h4 class="chat-h4">Chat with Suja Consultancies</h4>
                     <div id="close-btn-mob"><i class="bi bi-x-square chat-close"></i></div>
@@ -398,7 +388,7 @@
         <div class="d-table">
             <div class="d-table-cell">
                 <h2 class="img-h2 ">About Us</h2>
-                <h3 class="bg-h3 ">"Connecting Talent with Opportunity"</h3>
+                <h3 class="bg-h3 ">"Connecting Talent with <span class="font-color">Opportunity</span>"</h3>
                 <ul>
                     <li class=" bb">
                         <a class="text-light" href="{% url 'ageis_app:index' %}">Home</a>
@@ -744,7 +734,7 @@
                         <div class="header-chat">
                             <div class="header-chat-box">
                                 <div class="logo-div-chat-box">
-                                    <img class="logo-chat-box" src="{% static 'assets/images/Agies-logo.png' %}">
+                                    <img class="logo-chat-box" src="{% static 'assets/images/suja.jpg' %}">
                                     <a href="#" class="close-btn-a"><i class="bi bi-x-square close-btn"></i></a>
                                 </div>
                                 <h2 class="h2-chat-box">Suja Consultancies ONLINE CHAT BOT</h2>

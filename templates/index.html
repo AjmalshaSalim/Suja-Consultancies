@@ -85,6 +85,7 @@ body, p, h2, h3, a, span, p, button, ::placeholder{
 }
 h1{
     font-family: "Paytone One", sans-serif !important;
+    text-transform: uppercase;
 }
 .custom-carousel-container{
     width: 100%;
@@ -212,24 +213,24 @@ h1{
     <nav-2>
         <div class="full-nav">
             <div class="container div-container">
-                <!-- <div class="nav-phn"> -->
-                <!-- <a class="phn-a" href="tel:+91918848686147"><i class="bi bi-telephone-outbound-fill nav-social-call"></i>+91918848686147</a> -->
-                <!-- </div> -->
+                <div class="nav-phn">
+                <a class="phn-a" href="tel:+91918848686147"><i class="bi bi-telephone-outbound-fill nav-social-call"></i>+91918848686147</a>
+                </div>
                 <div class="nav-mail-comb">
                     <div class="nav-mail">
-                        <!-- <a class="email-a" href="mailto:info@sujaconsultancies.in"><i class="bi bi-envelope-at-fill nav-social-email"></i>info@sujaconsultancies.in</a> -->
-                        <p class="nav-welcome-text">Welcome to Suja Consultancies: Empowering Talent, Enhancing Companies. Step into
-                            excellence with us.</p>
+                        <a class="email-a" href="mailto:info@sujaconsultancies.in"><i class="bi bi-envelope-at-fill nav-social-email"></i>info@sujaconsultancies.in</a>
+                        <!-- <p class="nav-welcome-text">Welcome to Suja Consultancies: Empowering Talent, Enhancing Companies. Step into
+                            excellence with us.</p> -->
 
                     </div>
-                    <!-- <div class="nav-social">
+                    <div class="nav-social">
                     <ul class="nav-social-ul" type="none">
                         <li class="nav-social-name"><a  class="nav-social-a" href="https://wa.link/sws14o"><i class="bi bi-whatsapp nav-social-whats"></i></a></li>
                         <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-instagram nav-social-insta"></i></a></li>
                         <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-linkedin nav-social-linked"></i></a></li>
                         <li class="nav-social-name"><a  class="nav-social-a" href=""><i class="bi bi-facebook nav-social-face"></i></a></li>
                     </ul>
-                </div> -->
+                </div>
                 </div>
             </div>
         </div>
@@ -294,7 +295,7 @@ h1{
                 <div class="chat-box" id="chat-box">
                     <div class="chat-box-head">
 
-                        <img class="logo-chat-box-1" src="{% static 'assets/images/Agies-logo.png' %}">
+                        <img class="logo-chat-box-1" src="{% static 'assets/images/suja.jpg' %}">
 
                         <h4 class="chat-h4">Chat with Suja Consultancies</h4>
                         <div id="close-btn"><i class="bi bi-x-square chat-close"></i></div>
@@ -416,7 +417,7 @@ h1{
             <div class="chat-box" id="chat-box-mob">
                 <div class="chat-box-head">
 
-                    <img class="logo-chat-box-1" src="{% static 'assets/images/Agies-logo.png' %}">
+                    <img class="logo-chat-box-1" src="{% static 'assets/images/suja.jpg' %}">
 
                     <h4 class="chat-h4">Chat with Suja Consultancies</h4>
                     <div id="close-btn-mob"><i class="bi bi-x-square chat-close"></i></div>
@@ -487,7 +488,7 @@ h1{
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
                             <div class="col-div">
-                                <h1 class="carosel-head">Get Recruited to the Professional Companies and make your
+                                <h1 class="carosel-head">Get Recruited to the <span class="font-color">Professional Companies</span> and make your
                                     dream come true</h1>
                             </div>
                         </div>
@@ -499,7 +500,7 @@ h1{
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
                             <div class="col-div">
-                                <h1 class="carosel-head">Sourcing & finding relevant & talented people for your organisation is
+                                <h1 class="carosel-head">Sourcing & finding <span class="font-color">relevant & talented</span> people for your organisation is
                                     one of the most important things these days.”</h1>
                             </div>
                         </div>
@@ -512,7 +513,7 @@ h1{
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
                             <div class="col-div">
-                                <h1 class="carosel-head">We're Your HR Partner for a Brighter Tomorrow</h1>
+                                <h1 class="carosel-head">We're Your <span class="font-color">HR Partner</span> for a Brighter Tomorrow</h1>
                             </div>
                         </div>
                     </div>
@@ -624,10 +625,10 @@ h1{
                                 
                                 </div>
 
-                                <h6 class="job-h3-cls">
+                                <h5 class="job-h3-cls">
                                     <a class="job-h3 text-center"
                                         href="{% url 'ageis_app:jobs_details' i.id %}">{{i.job_title}}</a>
-                                </h6>
+                                </h5>
                                 <ul>
                                     <li class="li-job">
                                         {% if i.company %}
@@ -1065,15 +1066,23 @@ h1{
                                           
                         {% for i in testimonial %}
                         <div class="card swiper-slide" style=" padding: 10px;">
-                            <div class="profile-img" style="z-index: 100;">
-                                {%if i.customer_img%}
-                              <img class="client-image" src="{{i.customer_img.url}}" alt="Client 1">
-                              {% endif %}
-                            </div>
+                           
                             <div class="testimonial-text" style="padding:15px" id="client-testimonial-detail-container">
-                              <h3>{{i.customer_name}}</h3>
+                              <!-- <h3>{{i.customer_name}}</h3>
+                              <p class="company-title">{{i.company_name.company_name}}</p> -->
+                              <p id="client-testmonial-paragraph"> <b style="font-size:x-large;">" </b> {{i.reviews}} <b style="font-size:x-large;"> " </b></p>
+                            </div>
+                            <div class="profile-img" style="z-index: 100; display: flex;">
+                                <div class="w-50" style="margin-left: 10px;">
+                                    {%if i.customer_img%}
+                                    <img class="client-image" src="{{i.customer_img.url}}" alt="Client 1">
+                                    {% endif %}
+                                </div>
+                                <div class="w-50" style="padding-top: 40px;">
+                                    <h3>{{i.customer_name}}</h3>
                               <p class="company-title">{{i.company_name.company_name}}</p>
-                              <p id="client-testmonial-paragraph">- {{i.reviews}}</p>
+                                </div>
+                                
                             </div>
                           </div>
                         {% endfor %}          
