@@ -11,14 +11,14 @@
   background-color: #FFFBFC;
  } */
  .bg-div {
-  background-image: url('../images/bgonea.jpg');
+  background-image: url('../bg-video/suja-abstract.png');
   background-size: cover;
 }
 .reg-a{
-  color: #f03f0c;
+  color: #1b61a6;
 }
 .reg-a:hover{
-  color: #f3de19;
+  color: #3186db;
 }
 .register-div{
   margin-top: 5%;
@@ -57,7 +57,7 @@
 }
 input:focus{
     outline: none;
-    box-shadow:1px 2px 3px 10px #f03f0c;
+    box-shadow:1px 2px 3px 10px #1b61a6;
 } 
 .form-control-label{
     color: black;

@@ -75,7 +75,7 @@ margin-bottom: 20px;
     
  }
  .resume-collapse-a:hover{
-   color: #C10101;
+   color: #1b61a6;
    letter-spacing: 2px;
    font-weight: 700;
  }
@@ -122,7 +122,7 @@ margin-bottom: 20px;
    margin-bottom: 5%;
  }
  .abord-living-card{
-  border: 1px solid #b51b39;
+  border: 1px solid #1b61a6;
   border-radius: 10px;
   margin-left: 1%;
   width: 32%;
@@ -150,7 +150,7 @@ margin-bottom: 20px;
  }
  .intership-read-col{
   border-radius: 10px;
-  border: 1px dashed #b51b39;
+  border: 1px dashed #1b61a6;
   background-color: rgba(255, 255, 255, 0.411);
   padding: 6%;
   margin-left: 1% ;
@@ -273,14 +273,14 @@ margin-bottom: 20px;
   padding-bottom: 5%;
  }
  .collapse-basic{
-  color: #DC3545 !important;
+  color:  !important;
   padding: 10px;
   margin-top: 20px;
-  border:2px solid #DC3545;
+  border:2px solid ;
   border-radius: 10px;
  }
  .collapse-basic:hover{
-  background-color: #DC3545;
+  background-color: ;
   color: #fff !important;
  }
  .call-centre-bg{
@@ -309,7 +309,7 @@ margin-bottom: 20px;
   display: none;
  }
  #readmore,#readmore-1{
-  color: #b51b39;
+  color: #1b61a6;
  }
 
  /*popup  ----------------*/
