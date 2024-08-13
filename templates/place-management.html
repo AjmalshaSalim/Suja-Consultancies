@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Suja Consultancies </title>
+  <title>Suja Consultancies | Places </title>
+  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.ico' %}">
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
   <link rel="stylesheet" href="https://unpkg.com/datepicker/dist/datepicker.min.css">
   <script src="https://unpkg.com/datepicker"></script>
@@ -42,7 +43,7 @@
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-      <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTELogo" width="30%">
+      <img src="{% static 'assets/images/suja-logo.png' %}" alt="AdminLTELogo" width="30%">
     </div>
 
     <!-- Navbar -->
@@ -67,7 +68,7 @@
     <aside class="main-sidebar sidebar-light-primary elevation-4">
       <!-- Brand Logo -->
       <a href="{% url 'ageis_app:index' %}" class="brand-link">
-        <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image">
+        <img src="{% static 'assets/images/suja-long.png' %}" alt="AdminLTE Logo" class="brand-image">
 
       </a>
 
@@ -80,7 +81,7 @@
                 <a href="{% url 'ageis_app:user_management' %}" class="nav-link">
                     <span><img src="{% static 'dist/img/icon/user.gif' %}" class="nav-icon"></span>
                   <p>
-                    User Management
+                    Users
                   </p>
                 </a>
               </li>
@@ -92,40 +93,40 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'ageis_app:applied_jobs' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Applied Jobs</p>
+             <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'ageis_app:applied_jobs' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Job Applicants</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'ageis_app:jobs' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p> Add Jobs</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'ageis_app:job_categories' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Job categories</p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'ageis_app:jobs' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Job Add</p>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'ageis_app:job_types' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Job Types</p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'ageis_app:job_categories' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Job categories</p>
-                  </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'ageis_app:job_types' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Job Types</p>
-                  </a>
-              </li>
-              
-             
-            </ul>
+            </li>
+            
+           
+          </ul>
           </li>
           <li class="nav-item">
             <a href="{% url 'ageis_app:place_management' %}" class="nav-link ">
               <span><img src="{% static 'dist/img/icon/earth.gif' %}" class="nav-icon"></span>
               <p>
-                Place Management
+                Places
               </p>
             </a>
           </li>
@@ -133,7 +134,7 @@
             <a href="{% url 'ageis_app:client' %}" class="nav-link ">
               <span><img src="{% static 'dist/img/icon/social-care.gif' %}" class="nav-icon"></span>
               <p>
-                Client
+                Clients
               </p>
             </a>
             
@@ -143,7 +144,7 @@
             <a href="{% url 'ageis_app:testimonial' %}" class="nav-link">
               <span><img src="{% static 'dist/img/icon/stars.gif' %}" class="nav-icon"></span>
               <p>
-                Testimonial
+                Testimonials
               </p>
             </a>
             
@@ -153,7 +154,7 @@
             <a href="{% url 'ageis_app:about_us_backend' %}" class="nav-link">
               <span><img src="{% static 'dist/img/icon/share.gif' %}" class="nav-icon"></span>
               <p>
-                Aboutus Add
+                About Us
               </p>
             </a>
           </li>
@@ -228,7 +229,7 @@
                             <div class="modal-dialog" role="document">
                               <div class="modal-content modal-bg">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Country Add</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">Add Country </h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -320,7 +321,7 @@
                             <div class="modal-dialog" role="document">
                               <div class="modal-content modal-bg">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">State Add</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">Add State</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -425,7 +426,7 @@
                             <div class="modal-dialog" role="document">
                               <div class="modal-content modal-bg">
                                 <div class="modal-header">
-                                  <h5 class="modal-title bg- dark" id="exampleModalLabel">District Add</h5>
+                                  <h5 class="modal-title bg- dark" id="exampleModalLabel">Add District</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
