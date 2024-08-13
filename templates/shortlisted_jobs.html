@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Suja Consultancies </title>
+  <title>Suja Consultancies | Shortlist </title>
   <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.ico' %}">
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
   <link rel="stylesheet" href="https://unpkg.com/datepicker/dist/datepicker.min.css">
@@ -103,7 +103,7 @@
   <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{% url 'ageis_app:dashboard' %}"  class="brand-link">
-       <img src="{% static 'assets/images/suja-logo.png' %}" alt="AdminLTE Logo" class="brand-image">
+      <img src="{% static 'assets/images/suja-long.png' %}" alt="AdminLTE Logo" class="brand-image">
      
     </a>
 
@@ -116,7 +116,7 @@
               <a href="{% url 'ageis_app:user_management' %}" class="nav-link">
                   <span><img src="{% static 'dist/img/icon/user.gif' %}" class="nav-icon"></span>
                 <p>
-                  User Management
+                  Users
                 </p>
               </a>
             </li>
@@ -132,25 +132,25 @@
             <li class="nav-item">
               <a href="{% url 'ageis_app:applied_jobs' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Applied Jobs</p>
+                <p>Job Applicants</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{% url 'ageis_app:jobs' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Job Add</p>
+                <p> Add Jobs</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{% url 'ageis_app:job_categories' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Job categories</p>
+                <p>Add Job categories</p>
                 </a>
             </li>
             <li class="nav-item">
               <a href="{% url 'ageis_app:job_types' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Job Types</p>
+                <p>Add Job Types</p>
                 </a>
             </li>
             
@@ -161,7 +161,7 @@
           <a href="{% url 'ageis_app:place_management' %}" class="nav-link ">
             <span><img src="{% static 'dist/img/icon/earth.gif' %}" class="nav-icon"></span>
             <p>
-              Place Management
+              Places
             </p>
           </a>
         </li>
@@ -169,7 +169,7 @@
           <a href="{% url 'ageis_app:client' %}" class="nav-link ">
             <span><img src="{% static 'dist/img/icon/social-care.gif' %}" class="nav-icon"></span>
             <p>
-              Client
+              Clients
             </p>
           </a>
           
@@ -179,7 +179,7 @@
           <a href="{% url 'ageis_app:testimonial' %}" class="nav-link">
             <span><img src="{% static 'dist/img/icon/stars.gif' %}" class="nav-icon"></span>
             <p>
-              Testimonial
+              Testimonials
             </p>
           </a>
           
@@ -189,7 +189,7 @@
           <a href="{% url 'ageis_app:about_us_backend' %}" class="nav-link">
             <span><img src="{% static 'dist/img/icon/share.gif' %}" class="nav-icon"></span>
             <p>
-              Aboutus Add
+              About Us
             </p>
           </a>
         </li>
@@ -314,7 +314,7 @@
               </tr>
               {% empty %}
               <tr>
-                <td colspan="8" class="text-center">No shortlisted jobs found.</td>
+                <td colspan="8" class="text-center">No data found.</td>
               </tr>
               {% endfor %}
             </tbody>
