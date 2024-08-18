@@ -81,7 +81,7 @@ urlpatterns = [
     path('job-search', views.job_search, name='job_search'),
 
 
-    
+    path('recently-searched-jobs/', views.recently_searched_jobs, name='recently_searched_jobs'),
     # path('disclaimer/', views.render_template, {'template_name': 'disclaimer.html'}, name='disclaimer'),
     # path('terms/', views.render_template, {'template_name': 'terms.html'}, name='terms'),
     # path('faq/', views.render_template, {'template_name': 'faq.html'}, name='faq'),
@@ -115,6 +115,11 @@ urlpatterns = [
     path('filter-results/', views.filter_results, name='filter_results'),
 
 
+    path('most-applied-jobs/', views.jobs_by_application_count, name='most_applied_jobs'),
     
-    
+
+    path('email-submission/', views.email_submission, name='email_submission'),
+    path('otp-verification/', views.otp_verification, name='otp_verification'),
+     path('resend-otp/', views.resend_otp, name='resend_otp'),
+
 ]

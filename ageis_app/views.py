@@ -6,49 +6,87 @@ from ageis_app.models import *
 from ageis_app.forms import *
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.db.models import Count
+from django.views.generic import ListView
+from django.db.models import F
+from django.utils.crypto import get_random_string
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
 def index(request):
+    recent_jobs = []
+    if request.user.is_authenticated:
+        user = request.user
+        recent_jobs = RecentlySearchedJobs.objects.filter(user=user).order_by('-search_date')
+    
     job_posted_count = Jobs.objects.all().count()
     applied_jobs_count = AppliedJobs.objects.all().count()
     company_count = Clients.objects.all().count()
     members_count = ExtendedUserModel.objects.all().count()
     companies = Clients.objects.all()
     jobs = Jobs.objects.all().order_by('job_post_date')[:4]
-    job_category  = JobCategories.objects.all()
+    job_category = JobCategories.objects.all()
     testimonial = Testimonials.objects.all()
-    development_count = Jobs.objects.filter(job_category__id = 7).count()
-    accounting_finance_count = Jobs.objects.filter(job_category__id = 1).count()
-    internship_count = Jobs.objects.filter(job_category__id = 2).count()
-    automotive_count = Jobs.objects.filter(job_category__id = 3).count()
-    marketing_count = Jobs.objects.filter(job_category__id = 4).count()
-    human_resource_count = Jobs.objects.filter(job_category__id = 5).count()
-    customer_service_count = Jobs.objects.filter(job_category__id = 6).count()
-    project_management_count = Jobs.objects.filter(job_category__id = 8).count()
-    design_count = Jobs.objects.filter(job_category__id = 9).count()
+
+    # Count of jobs in specific categories
+    development_count = Jobs.objects.filter(job_category__id=7).count()
+    accounting_finance_count = Jobs.objects.filter(job_category__id=1).count()
+    internship_count = Jobs.objects.filter(job_category__id=2).count()
+    automotive_count = Jobs.objects.filter(job_category__id=3).count()
+    marketing_count = Jobs.objects.filter(job_category__id=4).count()
+    human_resource_count = Jobs.objects.filter(job_category__id=5).count()
+    customer_service_count = Jobs.objects.filter(job_category__id=6).count()
+    project_management_count = Jobs.objects.filter(job_category__id=8).count()
+    design_count = Jobs.objects.filter(job_category__id=9).count()
+    
+    # Top 20 most-applied jobs
+    most_applied_jobs = Jobs.objects.filter(application_count__gt=0).order_by('-application_count')[:20]
+
 
 
 
     context = {
-        'companies' : companies,
-        'jobs' : jobs,
-        'job_posted_count' : job_posted_count,
-        'applied_jobs_count' : applied_jobs_count,
+        'companies': companies,
+        'jobs': jobs,
+        'job_posted_count': job_posted_count,
+        'applied_jobs_count': applied_jobs_count,
         'company_count': company_count,
         'members_count': members_count,
-        'testimonial':testimonial,
-        'job_category':job_category,
-        'development_count':development_count,
-        'accounting_finance_count':accounting_finance_count,
-        'internship_count':internship_count,
-        'automotive_count':automotive_count,
-        'marketing_count':marketing_count,
-        'human_resource_count':human_resource_count,
-        'customer_service_count':customer_service_count,
-        'project_management_count':project_management_count,
-        'design_count':design_count,
+        'testimonial': testimonial,
+        'job_category': job_category,
+        'development_count': development_count,
+        'accounting_finance_count': accounting_finance_count,
+        'internship_count': internship_count,
+        'automotive_count': automotive_count,
+        'marketing_count': marketing_count,
+        'human_resource_count': human_resource_count,
+        'customer_service_count': customer_service_count,
+        'project_management_count': project_management_count,
+        'design_count': design_count,
+        'most_applied_jobs' :most_applied_jobs,
+        'recent_jobs': recent_jobs,
     }
-    return render(request,'index.html',context)
+    
+    return render(request, 'index.html', context)
+
+def jobs_by_application_count(request):
+    jobs = Jobs.objects.filter(application_count__gt=0).order_by('-application_count')
+    return render(request, 'jobsfrontend.html', {'jobs': jobs})
+    
+@login_required
+def recently_searched_jobs(request):
+    user = request.user
+    # Get the recently searched job objects
+    recent_searches = RecentlySearchedJobs.objects.filter(user=user).order_by('-search_date')
+    
+    # Extract the jobs from the recent searches
+    recent_jobs = [search.job for search in recent_searches]
+
+ 
+    context = {
+        'jobs': recent_jobs
+    }
+    return render(request, 'jobsfrontend.html', context)
 
 
 def admin_registration(request):
@@ -73,6 +111,100 @@ def admin_registration(request):
             return redirect('ageis_app:admin_registration')
     return render(request,'admin-register.html')
 
+
+def email_submission(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        # Check if the email is already registered (optional)
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email is already registered.')
+            return redirect('ageis_app:email_submission')
+
+        # Generate OTP
+        otp = get_random_string(length=6, allowed_chars='0123456789')
+        
+        # Save OTP to the session
+        request.session['email'] = email
+        request.session['otp'] = otp
+        
+        # Send OTP to the email
+        send_mail(
+            'Your OTP Code',
+            f'Your OTP code is: {otp}',
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+        
+        messages.success(request, 'OTP has been sent to your email.')
+        return redirect('ageis_app:otp_verification')
+    
+    return render(request, 'email_login.html')
+
+
+def otp_verification(request):
+    if request.method == 'POST':
+        email = request.session.get('email')
+        otp_entered = request.POST.get('otp')
+        
+        # Get the OTP from the session
+        otp_saved = request.session.get('otp')
+        
+        if email and otp_saved and otp_entered == otp_saved:
+            # Check if user already exists
+            if User.objects.filter(email=email).exists():
+                user = User.objects.get(email=email)
+            else:
+                # Create a new user if they do not exist
+                username = email.split('@')[0]  # Simple username generation
+                #password = get_random_string(length=8)   Generate a random password
+                password = otp_entered
+                user = User.objects.create_user(username=username, email=email, password=password)
+            
+            # Authenticate and log in the user
+            user = authenticate(username=user.username, password=user.password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'OTP verified and logged in successfully.')
+                # Clear the session data
+                request.session.pop('email', None)
+                request.session.pop('otp', None)
+                return redirect('ageis_app:index')  # Redirect to home or another page
+            else:
+                messages.error(request, 'Authentication failed.')
+        else:
+            messages.error(request, 'Invalid OTP or OTP has expired.')
+        return redirect('ageis_app:otp_verification')
+    
+    return render(request, 'otp_verification.html')
+
+
+
+def resend_otp(request):
+    email = request.session.get('email')
+    
+    if email:
+        # Generate a new OTP
+        otp = get_random_string(length=6, allowed_chars='0123456789')
+        
+        # Save the new OTP to the session
+        request.session['otp'] = otp
+        
+        # Send the new OTP to the email
+        send_mail(
+            'Your New OTP Code',
+            f'Your new OTP code is: {otp}',
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+        
+        messages.success(request, 'A new OTP has been sent to your email.')
+    else:
+        messages.error(request, 'No email address found in session.')
+    
+    return redirect('ageis_app:otp_verification')
 
 
 
@@ -647,6 +779,15 @@ def apply_job(request,job_id):
     full_name = first_name+' '+last_name
 
     jobs = Jobs.objects.get(id=job_id)
+    if jobs.application_count is None:
+        jobs.application_count = 0
+        
+        # Increment the application_count by 1
+    jobs.application_count = F('application_count') + 1
+    jobs.save()
+    jobs.refresh_from_db()
+
+
     user = ExtendedUserModel.objects.get(user = request.user)
     AppliedJobs.objects.create(
         applied_user = user,
@@ -1026,33 +1167,27 @@ def contact_us(request):
 #     return render(request,'index.html', {'form': form})
 
 def job_search(request):
-    job_title = request.POST.get('title')
-    place = request.POST.get('place')
-    category = request.POST.get('category')
-    # Start with an empty query
+    # Use GET to retrieve the 'title' from the query parameters
+    job_title = request.GET.get('title')
+    user = request.user
+
     query = Q()
 
-    # Add conditions based on the provided parameters
+    # Only add the job_title filter if job_title is not None
     if job_title:
         query &= Q(job_title__icontains=job_title)
 
-    if place:
-        query &= (
-            Q(country__name__icontains=place) |
-            Q(district__name__icontains=place) |
-            Q(state__name__icontains=place)
-        )
+    results = Jobs.objects.filter(query)
 
-    if category:
-        query &= Q(job_category__name__icontains=category)
+    # Save the first result of the search to RecentlySearchedJobs, if any
+    job = results.first()
+    if job and user.is_authenticated and not RecentlySearchedJobs.objects.filter(user=user, job=job).exists():
+        RecentlySearchedJobs.objects.create(user=user, job=job)
 
-    # Perform the search using the constructed query
-    results = Jobs.objects.filter(query)    
     context = {
-        'jobs':results
+        'jobs': results
     }
-    return render(request,'jobsfrontend.html',context)
-
+    return render(request, 'jobsfrontend.html', context)
 
 def render_template(request, template_name):
     return render(request, template_name)

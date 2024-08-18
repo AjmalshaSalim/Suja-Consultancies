@@ -282,15 +282,14 @@ h1{
                         <a href="{% url 'ageis_app:contact_us' %}" class="nav-link">
                             Contact Us</a>
                     </li>
-                    <li class="nav-search">
-                        <div class="nav-search-box" style="width: 250px; height: 40px; background: #fff; display: flex; border: 1px solid #00000024; border-radius: 5px; margin-left: 25px;
-">
-                            <input href="" class="nav-search-input" placeholder="Search" style="border:none; margin-left:5px; outline:none;">
-                            <img src="../static/assets/icons/search.png" alt="" style="width:20px; height:20px; margin-top:7px; margin-left:7px; ">
-                                </input>
+                    <form action="{% url 'ageis_app:job_search' %}" method="GET">
+                        <div class="nav-search-box" style="width: 250px; height: 40px; background: #fff; display: flex; border: 1px solid #00000024; border-radius: 5px; margin-left: 25px;">
+                            <input type="text" name="title" class="nav-search-input" placeholder="Search" style="border:none; margin-left:5px; outline:none; flex: 1;">
+                            <button type="submit" style="background:none; border:none; padding:0;">
+                                <img src="../static/assets/icons/search.png" alt="Search" style="width:20px; height:20px; margin-top:7px; margin-left:7px;">
+                            </button>
                         </div>
-                        
-                    </li>
+                    </form>
                 </ul>
                 <div class="chat-box" id="chat-box">
                     <div class="chat-box-head">
@@ -603,7 +602,7 @@ h1{
                 dolore magna aliqua. Quis ipsum suspendisse ultrices gravida</p> -->
         </div>
         <div class="row">
-            {% for i in jobs %}
+            {% for i in most_applied_jobs %}
             <div class="col-md-6 col-lg-6 col-12 col-xl-3 col-xxl-3 col-xm-12">
                 <a href="{% url 'ageis_app:jobs_details' i.id %}">
                 <div class="job-card-two">
@@ -666,7 +665,7 @@ h1{
         </div>
 
         <div class="text-center">
-            <a href="{% url 'ageis_app:jobs_frontend' %}" class="btn btn-special resume-img-a resume-img-a-win ">More
+            <a href="{% url 'ageis_app:most_applied_jobs' %}" class="btn btn-special resume-img-a resume-img-a-win ">More
                 Jobs</a>
         </div>
     </div>
@@ -852,6 +851,7 @@ h1{
 <!-- Job categories -->
 
 <!-- Recently Searched Jobs -->
+ {% if recent_jobs %}
 <section class="job-style-two pt-100 pb-0">
     <div class="container">
         <div class="section-title text-center">
@@ -862,7 +862,7 @@ h1{
                 dolore magna aliqua. Quis ipsum suspendisse ultrices gravida</p> -->
         </div>
         <div class="row">
-            {% for i in jobs %}
+            {% for i in recent_jobs %}
             <div class="col-md-6 col-lg-6 col-12 col-xl-3 col-xxl-3 col-xm-12">
                 <a href="{% url 'ageis_app:jobs_details' i.id %}">
                 <div class="job-card-two">
@@ -873,9 +873,9 @@ h1{
                                 <div class="my-custom-outer-container">
                                     
                                        
-                                            {% if i.company %}
+                                            {% if i.job.company %}
                                             <div class="my-custom-container">
-                                                <img class="class-company" src="{{i.company.company_logo.url}}"
+                                                <img class="class-company" src="{{i.job.company.company_logo.url}}"
                                                 alt="logo">
                                             </div>
                                             
@@ -886,25 +886,25 @@ h1{
 
                                 <h6 class="job-h3-cls">
                                     <a class="job-h3 text-center"
-                                        href="{% url 'ageis_app:jobs_details' i.id %}">{{i.job_title}}</a>
+                                        href="{% url 'ageis_app:jobs_details' i.id %}">{{i.job.job_title}}</a>
                                 </h6>
                                 <ul>
                                     <li class="li-job">
-                                        {% if i.company %}
-                                        {{i.company.company_name}}
+                                        {% if i.job.company %}
+                                        {{i.job.company.company_name}}
                                         {% endif %}
                                     </li>
                                     <li class="li-job">
                                         <i class="bx bx-briefcase"></i>
-                                        {{i.experience}} Years experience
+                                        {{i.job.experience}} Years experience
                                     </li>
                                     <li class="li-job">
                                         <i class="bx bx-location-plus"></i>
-                                        {{i.country}}, {{i.state}}, {{i.district}}
+                                        {{i.job.country}}, {{i.job.state}}, {{i.job.district}}
                                     </li>
                                     <li class="li-job">
                                         <i class="bx bx-calendar"></i>
-                                        {{i.job_post_date}}
+                                        {{i.job.job_post_date}}
                                     </li>
                                 </ul>
                             </div>
@@ -925,11 +925,12 @@ h1{
         </div>
 
         <div class="text-center">
-            <a href="{% url 'ageis_app:jobs_frontend' %}" class="btn btn-special resume-img-a resume-img-a-win ">More
+            <a href="{% url 'ageis_app:recently_searched_jobs' %}" class="btn btn-special resume-img-a resume-img-a-win ">More
                 Jobs</a>
         </div>
     </div>
 </section>
+{% endif %}
 <!-- Recently Searched Jobs -->
 
 <!-- 3 Easy Steps -->

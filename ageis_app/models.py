@@ -127,6 +127,8 @@ class Jobs(models.Model):
     salary = models.CharField(max_length=100)
     languages = models.CharField(max_length=100)
     website_link = models.CharField(max_length=100)
+    application_count = models.IntegerField(default=0, blank=True, null=True)
+
     
 
 class AppliedJobs(models.Model):
@@ -196,4 +198,9 @@ class Leads(models.Model):
     default_language = models.CharField(max_length=40, null=True)
     client_id = models.IntegerField(default=0)
     lead_value = models.DecimalField(max_digits=15, decimal_places=2, null=True)
+
+class RecentlySearchedJobs(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    job = models.ForeignKey(Jobs, on_delete=models.CASCADE, related_name='searched_jobs')
+    search_date = models.DateTimeField(auto_now_add=True)
 
