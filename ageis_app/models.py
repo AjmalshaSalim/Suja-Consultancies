@@ -28,7 +28,7 @@ class Qualification(models.Model):
     completion_year = models.IntegerField()
 
     def __str__(self):
-        return f"{self.user.user.username} - {self.degree}"
+        return f"{self.user.user.username} - {self.id}"
     
 
 class Experience(models.Model):

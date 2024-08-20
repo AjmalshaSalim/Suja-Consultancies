@@ -13,7 +13,8 @@ urlpatterns = [
     path('admin-registration', views.admin_registration, name='admin_registration'),
     path('user-registration', views.user_registration, name='user_registration'),
     path('user-management', views.user_management, name='user_management'),
-    
+    path('edit-user/<int:user_id>/', views.edit_user, name='edit_user'),
+    path('create_user/', views.create_user, name='create_user'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('testimonial', views.testimonial, name='testimonial'),
     path('testimonial-edit/<int:update_id>/', views.testimonial_edit, name='testimonial_edit'),

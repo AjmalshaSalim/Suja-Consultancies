@@ -2,7 +2,20 @@ from django import forms
 from ageis_app.models import *
 
 
+class SkillForm(forms.ModelForm):
+    class Meta:
+        model = Skills
+        fields = ['skill']
 
+class QualificationForm(forms.ModelForm):
+    class Meta:
+        model = Qualification
+        fields = ['degree', 'institution', 'completion_year']
+
+class ExperienceForm(forms.ModelForm):
+    class Meta:
+        model = Experience
+        fields = ['company', 'position', 'start_date', 'end_date', 'description']
 
 
 class ClientAddForm(forms.ModelForm):

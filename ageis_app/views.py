@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render,redirect
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from ageis_app.models import *
@@ -237,8 +237,132 @@ def user_registration(request):
             return redirect('ageis_app:user_registration')
     return render(request,'user-register.html')
 
+def edit_user(request, user_id):
+    if request.method == 'POST':
+        user = get_object_or_404(User, id=user_id)
+        extended_user = get_object_or_404(ExtendedUserModel, user=user)
+        
+        # Update User fields
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.save()
+        
+        # Update ExtendedUserModel fields
+        extended_user.phone = request.POST.get('phone')
+        extended_user.location = request.POST.get('location')
+        
+        # Handle the CV upload
+        if 'cv' in request.FILES:
+            extended_user.cv = request.FILES['cv']
+        
+        extended_user.save()
 
+        # Update Skills
+        Skills.objects.filter(user=extended_user).delete()  # Remove old skills
+        skills = request.POST.get('skills', '')
+        skills_list = [skill.strip() for skill in skills.split(',') if skill.strip()]
+        for skill in skills_list:
+            Skills.objects.create(user=extended_user, skill=skill)
 
+        # Update Qualifications
+        Qualification.objects.filter(user=extended_user).delete()  # Remove old qualifications
+        degrees = request.POST.getlist('degree[]')
+        institutions = request.POST.getlist('institution[]')
+        completion_years = request.POST.getlist('completion_year[]')
+        for degree, institution, year in zip(degrees, institutions, completion_years):
+            if degree and institution and year:
+                Qualification.objects.create(
+                    user=extended_user,
+                    degree=degree,
+                    institution=institution,
+                    completion_year=int(year)
+                )
+
+        # Update Experience
+        Experience.objects.filter(user=extended_user).delete()  # Remove old experiences
+        companies = request.POST.getlist('company[]')
+        positions = request.POST.getlist('position[]')
+        start_dates = request.POST.getlist('start_date[]')
+        end_dates = request.POST.getlist('end_date[]')
+        descriptions = request.POST.getlist('description[]')
+        for company, position, start_date, end_date, description in zip(companies, positions, start_dates, end_dates, descriptions):
+            if company and position and start_date:
+                Experience.objects.create(
+                    user=extended_user,
+                    company=company,
+                    position=position,
+                    start_date=start_date,
+                    end_date=end_date if end_date else None,
+                    description=description
+                )
+
+        messages.success(request, 'User information updated successfully.')
+        return redirect('ageis_app:user_management')  # Replace with your user list view name
+    
+    return redirect('/')  # Handle non-POST requests appropriately
+    
+    return HttpResponseRedirect('/')
+def create_user(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        location = request.POST.get('location')
+        cv = request.FILES.get('cv')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists.')
+            return redirect('ageis_app:create_user')
+
+        username = email.split('@')[0]
+        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email)
+        extended_user = ExtendedUserModel(user=user, phone=phone, location=location, cv=cv)
+        extended_user.save()
+
+        # Handle Skills
+        skills = request.POST.get('skills', '')
+        skills_list = [skill.strip() for skill in skills.split(',') if skill.strip()]
+        for skill in skills_list:
+            Skills.objects.create(user=extended_user, skill=skill)
+
+        # Handle Qualifications
+        degrees = request.POST.getlist('degree[]')
+        institutions = request.POST.getlist('institution[]')
+        completion_years = request.POST.getlist('completion_year[]')
+        for degree, institution, year in zip(degrees, institutions, completion_years):
+            if degree and institution and year:
+                Qualification.objects.create(
+                    user=extended_user,
+                    degree=degree,
+                    institution=institution,
+                    completion_year=int(year)
+                )
+
+        # Handle Experience
+        companies = request.POST.getlist('company[]')
+        positions = request.POST.getlist('position[]')
+        start_dates = request.POST.getlist('start_date[]')
+        end_dates = request.POST.getlist('end_date[]')
+        descriptions = request.POST.getlist('description[]')
+        for company, position, start_date, end_date, description in zip(companies, positions, start_dates, end_dates, descriptions):
+            if company and position and start_date:
+                Experience.objects.create(
+                    user=extended_user,
+                    company=company,
+                    position=position,
+                    start_date=start_date,
+                    end_date=end_date if end_date else None,
+                    description=description
+                )
+
+        messages.success(request, 'User created successfully.')
+        return redirect('ageis_app:user_management')  # Replace with your actual user list view
+
+    return redirect('/')  # Handle non-POST requests appropriately
+
+    return render(request, 'create_user.html')
 def login(request):
     if 'username' in  request.session:
         return redirect('ageis_app:index')
@@ -768,7 +892,7 @@ def jobs_details(request, job_id):
 
 @login_required(login_url='ageis_app:login')
 def user_management(request):
-    userlist = ExtendedUserModel.objects.all()
+    userlist = ExtendedUserModel.objects.all().order_by('-id')
     return render(request,'user-management.html',{'userlist':userlist})
 
 
@@ -1283,11 +1407,15 @@ def add_experience(request):
 
     return redirect('ageis_app:user_profile')
 
-def delete_experience(request, experience_id):
-    experience = get_object_or_404(Experience, id=experience_id)
-    experience.delete()
-    messages.success(request, 'Experience deleted successfully.')
-    return redirect('user_profile')
+
+
+
+
+# def delete_experience(request, experience_id):
+#     experience = get_object_or_404(Experience, id=experience_id)
+#     experience.delete()
+#     messages.success(request, 'Experience deleted successfully.')
+#     return redirect('user_profile')
 
 
 @login_required
@@ -1348,13 +1476,16 @@ def contact_update(request):
 
 
 def delete_qualification_view(request, qualification_id):
-    qualification = get_object_or_404(Qualification, id=qualification_id)
-
-    # Check if the qualification belongs to the current user (for security)
-    if qualification.user.user == request.user:
+    if request.method == 'POST':  # Ensure it's a POST request
+        qualification = get_object_or_404(Qualification, id=qualification_id)
         qualification.delete()
+        
+        # Return a JSON response
+        return JsonResponse({'status': 'success', 'message': 'Qualification deleted successfully.'})
+    
+    # If not a POST request, return an error response
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
-    return redirect('ageis_app:user_profile')
 
 def add_qualification_view(request):
     user_profile = ExtendedUserModel.objects.get(user=request.user) 
@@ -1380,10 +1511,15 @@ def add_qualification_view(request):
     return redirect('ageis_app:user_profile')
 
 def delete_skill_view(request, skill_id):
-    skill = get_object_or_404(Skills, id=skill_id)
-    if skill.user.user == request.user:
+    if request.method == 'POST':  # Ensure it's a POST request
+        skill = get_object_or_404(Skills, id=skill_id)
         skill.delete()
-    return redirect('ageis_app:user_profile')
+        
+        # Return a JSON response
+        return JsonResponse({'status': 'success', 'message': 'Skill deleted successfully.'})
+    
+    # If not a POST request, return an error response
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 def add_skill(request):
     user_profile = ExtendedUserModel.objects.get(user=request.user) 
@@ -1448,9 +1584,14 @@ def change_resume_view(request):
 
 
 def delete_experience_view(request, experience_id):
-    experience = get_object_or_404(Experience, id=experience_id)
-    if experience.user.user == request.user:
+    if request.method == 'POST':  # Ensure it's a POST request
+        experience = get_object_or_404(Experience, id=experience_id)
         experience.delete()
-    return redirect('ageis_app:user_profile')
+        
+        # Return a JSON response
+        return JsonResponse({'status': 'success', 'message': 'Experience deleted successfully.'})
+    
+    # If not a POST request, return an error response
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 
