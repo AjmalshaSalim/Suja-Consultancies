@@ -1099,7 +1099,34 @@ h1{
         </div>
 </section>
 <!-- Client Reviews -->
-
+{% if request.user.is_authenticated and whatsapp %}
+<!-- WhatsApp Number Modal -->
+<div class="modal fade" id="whatsappModal" tabindex="-1" role="dialog" aria-labelledby="whatsappModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="whatsappModalLabel">Enter Your WhatsApp Number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="{% url 'ageis_app:submit_whatsapp_number' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="whatsapp_number">WhatsApp Number</label>
+                        <input type="text" class="form-control" id="whatsapp_number" name="whatsapp_number" placeholder="Enter your WhatsApp number" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <footer class="footer-area pt-100 pb-70 bg-light">
         <div class="container">
@@ -1345,6 +1372,14 @@ h1{
     <script src="{% static 'assets/js/home.js' %}"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        // Automatically trigger the modal if conditions are met
+        $(document).ready(function(){
+            {% if request.user.is_authenticated and whatsapp %}
+            $('#whatsappModal').modal('show');
+            {% endif %}
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $(".close-btn").click(function () {

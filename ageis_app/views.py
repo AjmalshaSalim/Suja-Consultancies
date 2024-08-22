@@ -42,7 +42,7 @@ def index(request):
     # Top 20 most-applied jobs
     most_applied_jobs = Jobs.objects.filter(application_count__gt=0).order_by('-application_count')[:20]
 
-
+    whatsapp = 'email' in request.session or 'otp' in request.session
 
 
     context = {
@@ -65,9 +65,37 @@ def index(request):
         'design_count': design_count,
         'most_applied_jobs' :most_applied_jobs,
         'recent_jobs': recent_jobs,
+        'whatsapp': whatsapp,
     }
     
     return render(request, 'index.html', context)
+
+
+@login_required
+def submit_whatsapp_number(request):
+    if request.method == 'POST':
+        whatsapp_number = request.POST.get('whatsapp_number')
+
+        # Validate the number (you might want to add more robust validation)
+        if whatsapp_number and whatsapp_number.isdigit():
+            # Get or create the user's profile
+            user_profile, created = ExtendedUserModel.objects.get_or_create(user=request.user)
+
+            # Save the WhatsApp number to the user's profile
+            user_profile.phone = whatsapp_number
+            user_profile.save()
+
+            # Set a success message
+            messages.success(request, 'Your WhatsApp number has been saved.')
+
+            # Remove 'whatsapp' from session so the modal doesn't show again
+            request.session.pop('email', None)
+            request.session.pop('otp', None)
+        else:
+            messages.error(request, 'Please enter a valid WhatsApp number.')
+
+    return redirect('ageis_app:index')  # Redirect to the homepage after submission
+
 
 def jobs_by_application_count(request):
     jobs = Jobs.objects.filter(application_count__gt=0).order_by('-application_count')
@@ -143,6 +171,8 @@ def email_submission(request):
     return render(request, 'email_login.html')
 
 
+from django.contrib.auth import authenticate, login as auth_login
+
 def otp_verification(request):
     if request.method == 'POST':
         email = request.session.get('email')
@@ -150,26 +180,24 @@ def otp_verification(request):
         
         # Get the OTP from the session
         otp_saved = request.session.get('otp')
+        print("otp_saved", otp_saved)
+        print("otp_entered", otp_entered)
         
-        if email and otp_saved and otp_entered == otp_saved:
-            # Check if user already exists
+        if otp_saved and otp_entered == otp_saved:
+            # Check if the user already exists
             if User.objects.filter(email=email).exists():
                 user = User.objects.get(email=email)
             else:
                 # Create a new user if they do not exist
                 username = email.split('@')[0]  # Simple username generation
-                #password = get_random_string(length=8)   Generate a random password
-                password = otp_entered
+                password = otp_entered  # Set OTP as the password
                 user = User.objects.create_user(username=username, email=email, password=password)
             
-            # Authenticate and log in the user
-            user = authenticate(username=user.username, password=user.password)
+            # Authenticate using the plain-text password
+            user = authenticate(username=user.username, password=otp_entered)
             if user is not None:
-                login(request, user)
+                auth_login(request, user)  # Use auth_login to avoid the conflict
                 messages.success(request, 'OTP verified and logged in successfully.')
-                # Clear the session data
-                request.session.pop('email', None)
-                request.session.pop('otp', None)
                 return redirect('ageis_app:index')  # Redirect to home or another page
             else:
                 messages.error(request, 'Authentication failed.')

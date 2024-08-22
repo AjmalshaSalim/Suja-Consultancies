@@ -5,7 +5,8 @@ app_name = 'ageis_app'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('login', views.login, name='login'),
+    path('login', views.email_submission, name='login'),
+    path('adminlogin', views.login, name='login'),
     path('logout', views.logout, name='logout'),
     path('forgot-password', views.forgot_password,name='forgot_password'),
     path('reset-password/<str:uidb64>/<str:token>/', views.reset_password,name='reset_password'),
@@ -121,6 +122,6 @@ urlpatterns = [
 
     path('email-submission/', views.email_submission, name='email_submission'),
     path('otp-verification/', views.otp_verification, name='otp_verification'),
-     path('resend-otp/', views.resend_otp, name='resend_otp'),
-
+    path('resend-otp/', views.resend_otp, name='resend_otp'),
+    path('submit_whatsapp_number/', views.submit_whatsapp_number, name='submit_whatsapp_number'),
 ]

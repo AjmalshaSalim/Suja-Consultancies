@@ -167,16 +167,15 @@ AUTHENTICATION_BACKENDS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.hostinger.com'
-EMAIL_PORT = 465 
-EMAIL_USE_TLS = False  # Set to False when using SSL
-EMAIL_USE_SSL = True   # Set to True when using SSL
-EMAIL_HOST_USER = 'site@ageisrecruitment.online'
-EMAIL_HOST_PASSWORD = 'site@Ageisrecruitment2023'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False  # Use TLS when EMAIL_PORT is 587
+EMAIL_USE_SSL = True   # Use SSL when EMAIL_PORT is 465
+EMAIL_HOST_USER = 'info@sujaconsultancy.com'
+EMAIL_HOST_PASSWORD = 'Infosuja@2023'
 
-DEFAULT_FROM_EMAIL = 'support@ageisrecruitment.online'  
-SERVER_EMAIL = 'site@ageisrecruitment.online'  
-YOUR_EMAIL = 'site@ageisrecruitment.online'
+DEFAULT_FROM_EMAIL = 'info@sujaconsultancy.com'  
+SERVER_EMAIL = 'info@sujaconsultancy.com'  
+YOUR_EMAIL = 'info@sujaconsultancy.com'
 
-
-# Additional line for debugging
+# Optional: Debug email issues in development
 EMAIL_DEBUG = True
