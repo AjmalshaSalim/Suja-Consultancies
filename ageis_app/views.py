@@ -77,7 +77,7 @@ def submit_whatsapp_number(request):
         whatsapp_number = request.POST.get('whatsapp_number')
 
         # Validate the number (you might want to add more robust validation)
-        if whatsapp_number and whatsapp_number.isdigit():
+        if whatsapp_number and whatsapp_number.isdigit() and len(whatsapp_number) == 10:
             # Get or create the user's profile
             user_profile, created = ExtendedUserModel.objects.get_or_create(user=request.user)
 
