@@ -290,14 +290,14 @@ def edit_user(request, user_id):
         extended_user.save()
 
         # Update Skills
-        Skills.objects.filter(user=extended_user).delete()  # Remove old skills
+        
         skills = request.POST.get('skills', '')
         skills_list = [skill.strip() for skill in skills.split(',') if skill.strip()]
         for skill in skills_list:
             Skills.objects.create(user=extended_user, skill=skill)
 
         # Update Qualifications
-        Qualification.objects.filter(user=extended_user).delete()  # Remove old qualifications
+       
         degrees = request.POST.getlist('degree[]')
         institutions = request.POST.getlist('institution[]')
         completion_years = request.POST.getlist('completion_year[]')
@@ -311,7 +311,7 @@ def edit_user(request, user_id):
                 )
 
         # Update Experience
-        Experience.objects.filter(user=extended_user).delete()  # Remove old experiences
+        
         companies = request.POST.getlist('company[]')
         positions = request.POST.getlist('position[]')
         start_dates = request.POST.getlist('start_date[]')
