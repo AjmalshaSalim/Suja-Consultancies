@@ -42,7 +42,10 @@ def index(request):
     # Top 20 most-applied jobs
     most_applied_jobs = Jobs.objects.filter(application_count__gt=0).order_by('-application_count')[:20]
 
-    whatsapp = 'email' in request.session or 'otp' in request.session
+    if 'email' in request.session and 'otp' in request.session and not user.phone:
+        whatsapp = 'email'
+    else:
+        whatsapp = None
 
 
     context = {
