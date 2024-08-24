@@ -674,9 +674,11 @@
                 </div>
                 <div class="prfl-education container">
                     <div class="resume-img-div">
+                        {% if user.cv %}
                         <embed src="{{user.cv.url}}" type="application/pdf" class="resume-img"/>
                         
                         <p>It appears you don't have a PDF plugin for this browser. You can <a href="{{ user.cv.url }}">download the PDF file</a>.</p>
+                        {% endif %}
                     </div>
                 </div>
                 <hr>

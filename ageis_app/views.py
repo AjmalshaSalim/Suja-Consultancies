@@ -412,22 +412,26 @@ def create_user(request):
     return render(request, 'create_user.html')
 def login(request):
     if 'username' in  request.session:
-        return redirect('ageis_app:index')
+        print("username in session already")
+        return redirect('ageis_app:dashboard')
+
     if request.method == 'POST':
         username_or_email = request.POST.get('username_or_email')
         password = request.POST.get('password')
         user = auth.authenticate(request, username=username_or_email, password=password)
         if user is not None:
+            print("Request is Post and user is not none")
             auth.login(request, user)
             request.session['username'] = username_or_email
             if user.is_superuser:
                 return redirect('ageis_app:dashboard')
             else:
                 print('User')
-                return redirect('ageis_app:index')
+                return redirect('ageis_app:dashboard')
         else:
+            print("Request is Post and user None")
             messages.error(request, 'Invalid credential..')
-            return redirect('ageis_app:login')
+            return redirect('ageis_app:adminlogin')
     return render(request, 'login.html')
 
 
@@ -508,7 +512,7 @@ def reset_password(request, uidb64, token):
 
 
 
-@login_required(login_url='ageis_app:login')
+@login_required(login_url='ageis_app:adminlogin')
 def dashboard(request):
     if request.user.is_superuser:
         testimonial_count = Testimonials.objects.all().count()
