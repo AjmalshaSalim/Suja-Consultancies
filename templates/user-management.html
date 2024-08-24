@@ -225,7 +225,7 @@
                                       <div class="container">
                                            <div class="row">
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                                    <h3 class="card-title">Users</h3>
+                                                    <h3 class="card-title">Filter Your Candidates</h3>
                                                 </div>
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                      <!-- Button trigger modal -->
@@ -372,22 +372,68 @@
                                                             </div>
                                                         </div>
                                                         </form>
-                                                       
+                                                  
+
+
+
+
+
+
                                                 </div>
+                                                    <form method="GET" class="mb-3">
+                                                  <div class="form-row">
+                                                    <div class="form-group col-md-2">
+                                                      <label for="skill">Skill</label>
+                                                      <input type="text" class="form-control" id="skill" name="skill" placeholder="Enter skill" value="{{ request.GET.skill }}">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                      <label for="qualification">Qualification</label>
+                                                      <input type="text" class="form-control" id="qualification" name="qualification" placeholder="Enter qualification" value="{{ request.GET.qualification }}">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                      <label for="experience">Experienced Profession</label>
+                                                      <input type="text" class="form-control" id="experience" name="experience" placeholder="Enter experience" value="{{ request.GET.experience }}">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                      <label for="country">Country</label>
+                                                      <input type="text" class="form-control" id="country" name="country" placeholder="Enter country" value="{{ request.GET.country }}">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                      <label for="state">State</label>
+                                                      <input type="text" class="form-control" id="state" name="state" placeholder="Enter state" value="{{ request.GET.state }}">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                      <label for="district">District</label>
+                                                      <input type="text" class="form-control" id="district" name="district" placeholder="Enter district" value="{{ request.GET.district }}">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                      <label for="location">City</label>
+                                                      <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" value="{{ request.GET.location }}">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                      <label for="relocate">Relocate</label>
+                                                      <input type="checkbox" id="relocate" name="relocate" value="1" {% if request.GET.relocate %}checked{% endif %}>
+                                                    </div>
+                                                  </div>
+                                                  <button type="submit" class="btn btn-success">Filter</button>
+                                                </form>
+
+
+
                                            </div>
                                       </div>
 
                                     </div>
                                     <!-- /.card-header -->
+
                                     <div class="card-body">
                                       <button type="button" class="btn btn-success mb-3 float-right" data-toggle="modal" data-target="#createUserModal">
-                                        Create User
+                                        Create Candidate
                                       </button>
                                       <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                           <tr>
-                                            <th>First name</th>
-                                            <th>Last name</th>
+                                            <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Location</th>
@@ -398,14 +444,30 @@
                                         <tbody>
                                           {% for i in userlist %}
                                           <tr>
-                                            <td>{{i.user.first_name}}</td>
-                                            <td>{{i.user.last_name}}</td>
-                                            <td>{{i.user.email}}</td>
-                                            <td>{{i.phone}}</td>
-                                            <td>{{i.location}}</td>
-                                            {% if i.cv %}
-                                            <td><a href="{{i.cv.url}}" download>Download Resume</a></td>
-                                            {% endif %}
+                                            <td>{{ i.user.first_name }} {{ i.user.last_name }}</td>
+
+                                              <td>{{ i.user.email }}</td>
+
+                                              <td>{{ i.phone }}</td>
+
+                                              <td>
+                                                  {% if i.location %}
+                                                      {{ i.location }}
+                                                  {% endif %}
+                                                  {% if i.district %}
+                                                      {% if i.location %}, {% endif %}{{ i.district }}
+                                                  {% endif %}
+                                                  {% if i.state %}
+                                                      {% if i.location or i.district %}, {% endif %}{{ i.state }}
+                                                  {% endif %}
+                                                  {% if i.country %}
+                                                      {% if i.location or i.district or i.state %}, {% endif %}{{ i.country }}
+                                                  {% endif %}
+                                              </td>
+
+                                              {% if i.cv %}
+                                              <td><a href="{{ i.cv.url }}" download>Download Resume</a></td>
+                                              {% endif %}
                                             <td>
                                               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUserModal{{ i.user.id }}">
                                                 Edit
@@ -529,8 +591,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <th>First name</th>
-                                            <th>Last name</th>
+                                            <th>Full name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Location</th>

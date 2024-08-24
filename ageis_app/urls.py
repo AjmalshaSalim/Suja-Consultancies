@@ -11,7 +11,7 @@ urlpatterns = [
     path('logout', views.user_logout, name='logout'),
     path('forgot-password', views.forgot_password,name='forgot_password'),
     path('reset-password/<str:uidb64>/<str:token>/', views.reset_password,name='reset_password'),
-    
+    path('search-jobs/', views.search_jobs, name='search_jobs'),
     path('admin-registration', views.admin_registration, name='admin_registration'),
     path('user-registration', views.user_registration, name='user_registration'),
     path('user-management', views.user_management, name='user_management'),

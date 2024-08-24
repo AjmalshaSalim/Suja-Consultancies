@@ -35,6 +35,8 @@
   <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.min.css' %}">
   <link rel="icon" type="image/x-icon" href="{% static 'dist/img/favicon.png' %}">
   <link rel="stylesheet" href="{% static 'dist/css/style.css' %}">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -376,7 +378,90 @@
                                                 </div>
                                            </div>
                                       </div>
-
+                                      <form method="get">
+                                        <div class="container mt-4">
+                                            <div class="row">
+                                                <!-- Country Input -->
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="country" class="form-label">Country:</label>
+                                                    <input type="text" name="country" id="country" class="form-control" value="{{ request.GET.country }}">
+                                                </div>
+                                
+                                                <!-- State Input -->
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="state" class="form-label">State:</label>
+                                                    <input type="text" name="state" id="state" class="form-control" value="{{ request.GET.state }}">
+                                                </div>
+                                
+                                                <!-- District Input -->
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="district" class="form-label">District:</label>
+                                                    <input type="text" name="district" id="district" class="form-control" value="{{ request.GET.district }}">
+                                                </div>
+                                
+                                                <!-- Location Input -->
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="location" class="form-label">Location:</label>
+                                                    <input type="text" name="location" id="location" class="form-control" value="{{ request.GET.location }}">
+                                                </div>
+                                
+                                                <!-- Job Dropdown -->
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="job" class="form-label">Job:</label>
+                                                    <select name="job" id="job" class="form-select">
+                                                        <option value="">Select Job</option>
+                                                        {% for job in jobs %}
+                                                            <option value="{{ job.id }}" {% if request.GET.job == job.id|stringformat:"s" %}selected{% endif %}>
+                                                                {{ job.job_title }} (Client: {{ job.company.company_name }})
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                
+                                                <!-- Relocate Checkbox -->
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="relocate" class="form-label">Can Relocate:</label>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="relocate" id="relocate" class="form-check-input" {% if request.GET.relocate %}checked{% endif %}>
+                                                        <label for="relocate" class="form-check-label">Yes</label>
+                                                    </div>
+                                                </div>
+                                
+                                                <!-- Client Dropdown -->
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="client" class="form-label">Client:</label>
+                                                    <select name="client" id="client" class="form-select">
+                                                        <option value="">Select Client</option>
+                                                        {% for client in clients %}
+                                                            <option value="{{ client.id }}" {% if request.GET.client == client.id|stringformat:"s" %}selected{% endif %}>
+                                                                {{ client.name }}
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                
+                                                <!-- Order Dropdown -->
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="order" class="form-label">Order:</label>
+                                                    <select name="order" id="order" class="form-select">
+                                                        <option value="asc" {% if request.GET.order == 'asc' %}selected{% endif %}>Ascending</option>
+                                                        <option value="desc" {% if request.GET.order == 'desc' %}selected{% endif %}>Descending</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Submit Button -->
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3">
+                                                    <button type="submit" class="btn btn-dark">Filter</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
+                                    
+                                    
+                                    
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -461,6 +546,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
   $(document).ready(function() {

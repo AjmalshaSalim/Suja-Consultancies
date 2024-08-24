@@ -773,7 +773,7 @@ def load_district(request):
 
 
 
-@login_required(login_url='ageis_app:login')
+@login_required(login_url='ageis_app:adminlogin')
 def jobs(request):
     try:
         if request.method == 'POST':
@@ -781,8 +781,6 @@ def jobs(request):
             if form.is_valid():
                 data = form.cleaned_data
                 company = data.get('company_name')
-                print("Company is :",company)
-                # Ensure 'company' is not None before saving
                 if company is not None:
                     job = form.save(commit=False)
                     job.added_by = request.user
@@ -793,20 +791,43 @@ def jobs(request):
                 else:
                     messages.error(request, 'Invalid company selected.')
             else:
-                print(form.errors)
                 messages.error(request, 'Error in the form submission. Please check the form data.')
         else:
             form = JobsAddForm()
+
+        # Filtering logic
+        jobs = Jobs.objects.all()
+
+        # Filter by client
+        client_id = request.GET.get('client')
+        if client_id:
+            jobs = jobs.filter(company_id=client_id)
+
+        # Filter by is_active
+        is_active_filter = request.GET.get('is_active')
+        if is_active_filter == 'true':
+            jobs = jobs.filter(is_active=True)
+        elif is_active_filter == 'false':
+            jobs = jobs.filter(is_active=False)
+
+        # Filter by Most Applied Jobs
+        most_applied = request.GET.get('most_applied')
+        print("most_applied",most_applied)
+        if most_applied == 'true':
+            print("Yeah Job is going to change")
+            jobs = jobs.order_by('-application_count')
+
+        context = {
+            'form': form,
+            'jobs': jobs,
+            'clients': Clients.objects.all(),
+        }
+        print("jobs",jobs)
+        return render(request, 'jobs.html', context)
+    
     except Exception as e:
         messages.error(request, str(e))
         return redirect('ageis_app:jobs')
- 
-    jobs = Jobs.objects.all()
-    context = {
-        'form': form,
-        'jobs': jobs,
-    }
-    return render(request, 'jobs.html', context)
 
 @login_required(login_url='ageis_app:login')
 def jobs_edit(request,update_id):
@@ -984,11 +1005,50 @@ def jobs_details(request, job_id):
 # product list page, product view page
 
 
-@login_required(login_url='ageis_app:login')
+@login_required(login_url='ageis_app:adminlogin')
 def user_management(request):
     userlist = ExtendedUserModel.objects.all().order_by('-id')
-    return render(request,'user-management.html',{'userlist':userlist})
 
+    skill_filter = request.GET.get('skill')
+    qualification_filter = request.GET.get('qualification')
+    experience_filter = request.GET.get('experience')
+    country_filter = request.GET.get('country')
+    state_filter = request.GET.get('state')
+    district_filter = request.GET.get('district')
+    location_filter = request.GET.get('location')
+    relocate_filter = request.GET.get('relocate')
+
+    if skill_filter:
+        skills = [skill.strip() for skill in skill_filter.split(',')]
+        for skill in skills:
+            user_ids_with_skill = Skills.objects.filter(skill__icontains=skill).values_list('user_id', flat=True)
+            userlist = userlist.filter(id__in=user_ids_with_skill)
+
+    if qualification_filter:
+        user_ids_with_qualification = Qualification.objects.filter(degree__icontains=qualification_filter).values_list('user_id', flat=True)
+        userlist = userlist.filter(id__in=user_ids_with_qualification)
+
+    if experience_filter:
+        user_ids_with_experience = Experience.objects.filter(description__icontains=experience_filter).values_list('user_id', flat=True)
+        userlist = userlist.filter(id__in=user_ids_with_experience)
+
+    if country_filter:
+        userlist = userlist.filter(country__iregex=country_filter)
+
+    if state_filter:
+        userlist = userlist.filter(state__iregex=state_filter)
+
+    if district_filter:
+        userlist = userlist.filter(district__iregex=district_filter)
+
+    if location_filter:
+        userlist = userlist.filter(location__iregex=location_filter)
+
+    print("relocate_filter",relocate_filter)
+    if relocate_filter:
+        userlist = userlist.filter(relocate=True)
+
+    return render(request, 'user-management.html', {'userlist': userlist})
 
 @login_required(login_url='ageis_app:login')
 def apply_job(request,job_id):
@@ -1030,13 +1090,73 @@ def apply_job(request,job_id):
 
 def applied_jobs(request):
     applied_jobs = AppliedJobs.objects.all()
-    return render(request,'applied-jobs-lists.html',{'applied_jobs':applied_jobs})
+    clients = Clients.objects.all()
+    jobs = Jobs.objects.all()
+    # Filtering by time period
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+    if start_date and end_date:
+        applied_jobs = applied_jobs.filter(applied_date__range=[start_date, end_date])
+
+    # Filtering by clients
+    client_id = request.GET.get('client')
+    if client_id:
+        applied_jobs = applied_jobs.filter(applied_job__company_id=client_id)
+
+    job_id = request.GET.get('job')
+    if job_id:
+        applied_jobs = applied_jobs.filter(applied_job_id=job_id)
+
+    # Filtering by order (ascending or descending)
+    order = request.GET.get('order', 'asc')
+    if order == 'desc':
+        applied_jobs = applied_jobs.order_by('-applied_date')
+    else:
+        applied_jobs = applied_jobs.order_by('applied_date')
+
+    # Filtering by relocation capability
+    relocate_filter = request.GET.get('relocate')
+    if relocate_filter:
+        applied_jobs = applied_jobs.filter(applied_user__relocate=True)
+
+    # Filtering by candidate location
+    country = request.GET.get('country')
+    state = request.GET.get('state')
+    district = request.GET.get('district')
+    location = request.GET.get('location')
+
+    if country:
+        applied_jobs = applied_jobs.filter(applied_user__country__icontains=country)
+    if state:
+        applied_jobs = applied_jobs.filter(applied_user__state__icontains=state)
+    if district:
+        applied_jobs = applied_jobs.filter(applied_user__district__icontains=district)
+    if location:
+        applied_jobs = applied_jobs.filter(applied_user__location__icontains=location)
+
+    return render(request, 'applied-jobs-lists.html', {'applied_jobs': applied_jobs, 'clients': clients , 'jobs': jobs})
+
+
+def search_jobs(request):
+    query = request.GET.get('query', '')
+    jobs = Jobs.objects.filter(job_title__icontains=query)
+    
+    jobs_list = [
+        {
+            'id': job.id,
+            'job_title': job.job_title,
+            'company_name': job.company.company_name
+        } for job in jobs
+    ]
+    
+    return JsonResponse({'jobs': jobs_list})
+
 
 def shortlist_candidate(request, job_id):
     applied_job = get_object_or_404(AppliedJobs, id=job_id)
     applied_job.is_shortlisted = True
     applied_job.save()
-
+    
     # Get the candidate's email address from the User model
     candidate_email = applied_job.applied_user.user.email
     print (request.user.username)

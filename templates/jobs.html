@@ -390,7 +390,47 @@
                                                 </div>
                                            </div>
                                       </div>
-
+                                      <form method="get">
+                                        <div class="container mt-4">
+                                            <div class="row">
+                                                <!-- Existing Filters -->
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="client" class="form-label">Client:</label>
+                                                    <select name="client" id="client" class="form-select">
+                                                        <option value="">Select Client</option>
+                                                        {% for client in clients %}
+                                                            <option value="{{ client.id }}" {% if request.GET.client == client.id|stringformat:"s" %}selected{% endif %}>
+                                                                {{ client.name }}
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                    
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="is_active" class="form-label">Job Status:</label>
+                                                    <select name="is_active" id="is_active" class="form-select">
+                                                        <option value="">All Jobs</option>
+                                                        <option value="true" {% if request.GET.is_active == 'true' %}selected{% endif %}>Active Jobs</option>
+                                                        <option value="false" {% if request.GET.is_active == 'false' %}selected{% endif %}>Inactive Jobs</option>
+                                                    </select>
+                                                </div>
+                                    
+                                                <div class="col-md-3 mb-3">
+                                                    <label for="most_applied" class="form-label">Sort By:</label>
+                                                    <select name="most_applied" id="most_applied" class="form-select">
+                                                        <option value="">Default</option>
+                                                        <option value="true" {% if request.GET.most_applied == 'true' %}selected{% endif %}>Most Applied Jobs</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3">
+                                                    <button type="submit" class="btn btn-dark">Filter</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">

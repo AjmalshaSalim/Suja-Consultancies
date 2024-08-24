@@ -13,6 +13,12 @@ class ExtendedUserModel(models.Model):
     position = models.CharField(max_length=255, blank=True, null=True)
     comapany_univercity = models.CharField(max_length=255, blank=True, null=True)
     profile_photo = models.ImageField(upload_to='profile_photos', blank=True, null=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=100, blank=True, null=True)
+    district = models.CharField(max_length=100, blank=True, null=True)
+    relocate = models.BooleanField(default=False)
+
+
 
 class Skills(models.Model):
     user = models.ForeignKey(ExtendedUserModel, on_delete=models.CASCADE, related_name='skills')
@@ -133,8 +139,9 @@ class Jobs(models.Model):
     languages = models.CharField(max_length=100)
     website_link = models.CharField(max_length=100)
     application_count = models.IntegerField(default=0, blank=True, null=True)
-
+    is_active = models.BooleanField(default=True) 
     
+from django.utils import timezone
 
 class AppliedJobs(models.Model):
     RESULT_CHOICES = [
@@ -157,7 +164,9 @@ class AppliedJobs(models.Model):
     result = models.CharField(max_length=20, choices=RESULT_CHOICES, default='default')
     offer_letter = models.FileField(upload_to='offer_letters', blank=True, null=True)
     handeled_by = models.CharField(max_length=50,default='default')
-    
+
+
+
 class AboutUs(models.Model):
     company = models.ForeignKey(Clients,on_delete=models.CASCADE)
     review = models.TextField()
