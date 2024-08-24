@@ -73,6 +73,7 @@ class JobCategories(models.Model):
     class Meta:
         verbose_name_plural = 'Job categories'
     name = models.CharField(max_length = 30)
+    image = models.ImageField(upload_to='job_categories/', blank=True, null=True)
 
 
 

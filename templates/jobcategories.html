@@ -212,7 +212,7 @@
                                                         </button>
                                                         
                                                         <!-- Modal -->
-                                                        <form method="post">
+                                                        <form method="post" enctype="multipart/form-data" >
                                                           {% csrf_token %}
                                                           <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
@@ -229,6 +229,7 @@
                                                                   <div class="row mt-4">
                                                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                                       {{form.name}}
+                                                                      {{form.image}}
                                                                           {% comment %} <input type="text" class=" form-control w-75" placeholder="Enter JOb categories"> {% endcomment %}
                                                                     </div>
                                                                    

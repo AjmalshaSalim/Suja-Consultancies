@@ -235,28 +235,28 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body" id="text-broswer">
-                                        <form method="post">
-                                          {% csrf_token %}
+                                      <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="card-body">
                                             <div class="row mt-4">
                                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                {{form.name}}
-                                                      {% comment %} <input type="text" class=" form-control w-75" placeholder="Enter Job categories"> {% endcomment %}
+                                                    <!-- Display form field for category name -->
+                                                    {{ form.name.label_tag }}
+                                                    {{ form.name }}
+                                                    <!-- Display form field for category image -->
+                                                    {{ form.image.label_tag }}
+                                                    {{ form.image }}
                                                 </div>
-                                               
                                             </div>
-                                           
-                                        
-                                    </div>
-                                    <div class="card-footer card-cyan">
-                                        <div class="row mt-4 text-center">
-                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                  <input type="submit" class="btn btn-primary" value="Submit">
-                                            </div>
-                                           
                                         </div>
-                                  
-                                    </div>
-                                </form>
+                                        <div class="card-footer card-cyan">
+                                            <div class="row mt-4 text-center">
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                    <input type="submit" class="btn btn-primary" value="Submit">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <!-- /.card-body -->
                                   </div>
                             </div>

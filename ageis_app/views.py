@@ -28,6 +28,15 @@ def index(request):
     job_category = JobCategories.objects.all()
     testimonial = Testimonials.objects.all()
 
+    category_data = {}
+    for category in job_category:
+        category_data[category.id] = {
+            'id': category.id,
+            'name': category.name,
+            'image_url': category.image.url if category.image else None,
+            'count': Jobs.objects.filter(job_category=category).count()
+        }
+    print("category_data",category_data)
     # Count of jobs in specific categories
     development_count = Jobs.objects.filter(job_category__id=7).count()
     accounting_finance_count = Jobs.objects.filter(job_category__id=1).count()
@@ -56,7 +65,7 @@ def index(request):
         'company_count': company_count,
         'members_count': members_count,
         'testimonial': testimonial,
-        'job_category': job_category,
+        'category_data': category_data,
         'development_count': development_count,
         'accounting_finance_count': accounting_finance_count,
         'internship_count': internship_count,
@@ -417,7 +426,7 @@ def login(request):
 
 def logout(request):
     if 'username' in request.session:
-        request.session.flush();
+        request.session.flush()
         print(request.session)
     return redirect('ageis_app:index')
 
@@ -601,38 +610,46 @@ def client_delete(request,client_id):
 @login_required(login_url='ageis_app:login')
 def job_categories(request):
     if request.method == 'POST':
-        form = JobCategoryAddForm(request.POST)
+        form = JobCategoryAddForm(request.POST, request.FILES)  # Include request.FILES for file uploads
         if form.is_valid():
             form.save()
-            messages.success(request,'Added..')
+            messages.success(request, 'Added..')
             return redirect('ageis_app:job_categories')
     else:
         form = JobCategoryAddForm()
 
     categories = JobCategories.objects.all()
     context = {
-        'form':form,
-        'categories':categories
+        'form': form,
+        'categories': categories
     }
-    return render(request,'jobcategories.html',context)
-
+    return render(request, 'jobcategories.html', context)
 
 
 @login_required(login_url='ageis_app:login')
-def job_categories_edit(request,update_id):
-    update = JobCategories.objects.filter(id = update_id).first()
+def job_categories_edit(request, update_id):
+    # Retrieve the job category object by id
+    update = JobCategories.objects.filter(id=update_id).first()
+
+    if not update:
+        # Handle the case where the job category is not found
+        messages.error(request, 'Job category not found.')
+        return redirect('ageis_app:job_categories')
+
     if request.method == 'POST':
-        form = JobCategoryAddForm(request.POST,instance=update)
+        # Include request.FILES to handle file uploads
+        form = JobCategoryAddForm(request.POST, request.FILES, instance=update)
         if form.is_valid():
             form.save()
-            messages.success(request,'Updated..')
+            messages.success(request, 'Updated successfully.')
             return redirect('ageis_app:job_categories')
     else:
         form = JobCategoryAddForm(instance=update)
+
     context = {
-        'form':form,
+        'form': form,
     }
-    return render(request,'jobcategories-edit.html',context)
+    return render(request, 'jobcategories-edit.html', context)
 
 
 
