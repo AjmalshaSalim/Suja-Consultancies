@@ -416,105 +416,115 @@
                                           <!-- Edit User Modal -->
                                           <div class="modal fade" id="editUserModal{{ i.user.id }}" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                  </button>
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form method="POST" action="{% url 'ageis_app:edit_user' i.user.id %}" enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        <div class="modal-body">
+                                                            <!-- Fields for editing user details -->
+                                                            <div class="form-group">
+                                                                <label for="first_name">First Name</label>
+                                                                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ i.user.first_name }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="last_name">Last Name</label>
+                                                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ i.user.last_name }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="email">Email</label>
+                                                                <input type="email" class="form-control" id="email" name="email" value="{{ i.user.email }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="phone">Phone</label>
+                                                                <input type="text" class="form-control" id="phone" name="phone" value="{{ i.phone }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="location">Location</label>
+                                                                <input type="text" class="form-control" id="location" name="location" value="{{ i.location }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="cv">Resume</label>
+                                                                <input type="file" class="form-control" id="cv" name="cv">
+                                                            </div>
+                                                          
+                                                            <!-- Section for editing Skills -->
+                                                            <h5>Skills</h5>
+                                                            <div id="skillsSection">
+                                                                {% for skill in i.skills.all %}
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" name="skills" value="{{ skill.skill }}" readonly>
+                                                                    <a href="#" class="btn btn-danger btn-sm delete-skill" data-id="{{ skill.id }}">Delete</a>
+                                                                </div>
+                                                                {% endfor %}  
+                                                                <div class="form-group">
+                                                                    <label for="">Enter new skills separated by commas</label>
+                                                                    <input type="text" class="form-control" name="skills" placeholder="Enter skills separated by commas" value="{{ skills_string }}">
+                                                                </div>
+                                                            </div>
+                                        
+                                                            <!-- Section for editing Qualifications -->
+                                                            <div class="form-group">
+                                                                <label for="qualifications">Qualifications</label>
+                                                                <div id="edit_qualification_fields">
+                                                                    <div id="qualificationsSection">
+                                                                        {% for qualification in i.qualifications.all %}
+                                                                        <div class="form-group qualification_field">
+                                                                            <input type="text" class="form-control mb-2" name="degree[]" value="{{ qualification.degree }}" readonly>
+                                                                            <input type="text" class="form-control mb-2" name="institution[]" value="{{ qualification.institution }}" readonly>
+                                                                            <input type="number" class="form-control mb-2" name="completion_year[]" value="{{ qualification.completion_year }}" readonly>
+                                                                            <a href="#" class="btn btn-danger btn-sm delete-qualification" data-id="{{ qualification.id }}">Delete</a>
+                                                                        </div>
+                                                                        {% endfor %}
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control mb-2" name="degree[]" placeholder="Add new degree">
+                                                                            <input type="text" class="form-control mb-2" name="institution[]" placeholder="Institution">
+                                                                            <input type="number" class="form-control mb-2" name="completion_year[]" placeholder="Year of Completion">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button" class="btn btn-secondary" id="addQualificationEdit">Add More Qualifications</button>
+                                                            </div>
+                                        
+                                                            <!-- Section for editing Experience -->
+                                                            <div class="form-group">
+                                                                <label for="experience">Experience</label>
+                                                                <div id="edit_experience_fields">
+                                                                    <div id="experienceSection">
+                                                                        {% for experience in i.experiences.all %}
+                                                                        <div class="form-group experience_field">
+                                                                            <input type="text" class="form-control mb-2" name="company[]" value="{{ experience.company }}" readonly>
+                                                                            <input type="text" class="form-control mb-2" name="position[]" value="{{ experience.position }}" readonly>
+                                                                            <input type="date" class="form-control mb-2" name="start_date[]" value="{{ experience.start_date|date:"Y-m-d" }}" readonly>
+                                                                            <input type="date" class="form-control mb-2" name="end_date[]" value="{{ experience.end_date|date:"Y-m-d" }}" readonly>
+                                                                            <textarea class="form-control mb-2" name="description[]" readonly>{{ experience.description }}</textarea>
+                                                                            <a href="#" class="btn btn-danger btn-sm delete-experience" data-id="{{ experience.id }}">Delete</a>
+                                                                        </div>
+                                                                        {% endfor %}
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control mb-2" name="company[]" placeholder="Add new company">
+                                                                            <input type="text" class="form-control mb-2" name="position[]" placeholder="Position">
+                                                                            <input type="date" class="form-control mb-2" name="start_date[]" placeholder="Start Date">
+                                                                            <input type="date" class="form-control mb-2" name="end_date[]" placeholder="End Date">
+                                                                            <textarea class="form-control mb-2" name="description[]" placeholder="Description"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button" class="btn btn-secondary" id="addExperienceEdit">Add More Experience</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <form method="POST" action="{% url 'ageis_app:edit_user' i.user.id %}" enctype="multipart/form-data">
-                                                  {% csrf_token %}
-                                                  <div class="modal-body">
-                                                    <!-- Fields for editing user details -->
-                                                    <div class="form-group">
-                                                      <label for="first_name">First Name</label>
-                                                      <input type="text" class="form-control" id="first_name" name="first_name" value="{{ i.user.first_name }}">
-                                                    </div>
-                                                    <div class="form-group">
-                                                      <label for="last_name">Last Name</label>
-                                                      <input type="text" class="form-control" id="last_name" name="last_name" value="{{ i.user.last_name }}">
-                                                    </div>
-                                                    <div class="form-group">
-                                                      <label for="email">Email</label>
-                                                      <input type="email" class="form-control" id="email" name="email" value="{{ i.user.email }}">
-                                                    </div>
-                                                    <div class="form-group">
-                                                      <label for="phone">Phone</label>
-                                                      <input type="text" class="form-control" id="phone" name="phone" value="{{ i.phone }}">
-                                                    </div>
-                                                    <div class="form-group">
-                                                      <label for="location">Location</label>
-                                                      <input type="text" class="form-control" id="location" name="location" value="{{ i.location }}">
-                                                    </div>
-                                                    <div class="form-group">
-                                                      <label for="cv">Resume</label>
-                                                      <input type="file" class="form-control" id="cv" name="cv">
-                                                    </div>
-                                          
-                                                    <!-- Section for editing Skills -->
-                                                    <h5>Skills</h5>
-                                                    <div id="skillsSection">
-                                                      {% for skill in i.skills.all %}
-                                                      <div class="form-group">
-                                                        <input type="text" class="form-control" name="skills_{{ forloop.counter }}" value="{{ skill.skill }}">
-                                                        <a href="#" class="btn btn-danger btn-sm delete-skill" data-id="{{ skill.id }}">Delete</a>
-                                                      </div>
-                                                      {% endfor %}
-                                                      <div class="form-group">
-                                                        <input type="text" class="form-control" name="new_skill" placeholder="Add new skill">
-                                                      </div>
-                                                    </div>
-                                          
-                                                    <!-- Section for editing Qualifications -->
-                                                    <h5>Qualifications</h5>
-                                                    <div id="qualificationsSection">
-                                                      {% for qualification in i.qualifications.all %}
-                                                      <div class="form-group">
-                                                        <input type="text" class="form-control" name="degree_{{ forloop.counter }}" value="{{ qualification.degree }}">
-                                                        <input type="text" class="form-control" name="institution_{{ forloop.counter }}" value="{{ qualification.institution }}">
-                                                        <input type="number" class="form-control" name="completion_year_{{ forloop.counter }}" value="{{ qualification.completion_year }}">
-                                                        <a href="#" class="btn btn-danger btn-sm delete-qualification" data-id="{{ qualification.id }}">Delete</a>
-                                                      </div>
-                                                      {% endfor %}
-                                                      <div class="form-group">
-                                                        <input type="text" class="form-control" name="new_degree" placeholder="Add new degree">
-                                                        <input type="text" class="form-control" name="new_institution" placeholder="Institution">
-                                                        <input type="number" class="form-control" name="new_completion_year" placeholder="Year of Completion">
-                                                      </div>
-                                                    </div>
-                                          
-                                                    <!-- Section for editing Experience -->
-                                                    <h5>Experience</h5>
-                                                    <div id="experienceSection">
-                                                      {% for experience in i.experiences.all %}
-                                                      <div class="form-group">
-                                                        <input type="text" class="form-control" name="company_{{ forloop.counter }}" value="{{ experience.company }}">
-                                                        <input type="text" class="form-control" name="position_{{ forloop.counter }}" value="{{ experience.position }}">
-                                                        <input type="date" class="form-control" name="start_date_{{ forloop.counter }}" value="{{ experience.start_date }}">
-                                                        <input type="date" class="form-control" name="end_date_{{ forloop.counter }}" value="{{ experience.end_date }}">
-                                                        <textarea class="form-control" name="description_{{ forloop.counter }}">{{ experience.description }}</textarea>
-                                                        <a href="#" class="btn btn-danger btn-sm delete-experience" data-id="{{ experience.id }}">Delete</a>
-                                                      </div>
-                                                      {% endfor %}
-                                                      <div class="form-group">
-                                                        <input type="text" class="form-control" name="new_company" placeholder="Add new company">
-                                                        <input type="text" class="form-control" name="new_position" placeholder="Position">
-                                                        <input type="date" class="form-control" name="new_start_date" placeholder="Start Date">
-                                                        <input type="date" class="form-control" name="new_end_date" placeholder="End Date">
-                                                        <textarea class="form-control" name="new_description" placeholder="Description"></textarea>
-                                                      </div>
-                                                    </div>
-                                          
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                                  </div>
-                                                </form>
-                                              </div>
                                             </div>
-                                          </div>
+                                        </div>
                                           {% endfor %}
                                         </tbody>
                                         <tfoot>
@@ -637,7 +647,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                    
+                                 
 
                                     
                                     <!-- /.card-body -->
@@ -754,6 +764,11 @@
       });
   });
   </script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
   document.getElementById('addQualification').addEventListener('click', function() {
     var qualificationFields = document.getElementById('qualification_fields');
@@ -780,8 +795,42 @@
     `;
     experienceFields.appendChild(newField);
   });
-  
 </script>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add more qualifications
+    document.getElementById('addQualificationEdit').addEventListener('click', function() {
+      var qualificationFields = document.getElementById('qualificationsSection');
+      var newField = document.createElement('div');
+      newField.classList.add('form-group', 'qualification_field');
+      newField.innerHTML = `
+        <input type="text" class="form-control mb-2" name="degree[]" placeholder="Degree">
+        <input type="text" class="form-control mb-2" name="institution[]" placeholder="Institution">
+        <input type="number" class="form-control mb-2" name="completion_year[]" placeholder="Completion Year">
+      `;
+      qualificationFields.appendChild(newField);
+    });
+    
+    // Add more experience
+    document.getElementById('addExperienceEdit').addEventListener('click', function() {
+      var experienceFields = document.getElementById('experienceSection');
+      var newField = document.createElement('div');
+      newField.classList.add('form-group', 'experience_field');
+      newField.innerHTML = `
+        <input type="text" class="form-control mb-2" name="company[]" placeholder="Company">
+        <input type="text" class="form-control mb-2" name="position[]" placeholder="Position">
+        <input type="date" class="form-control mb-2" name="start_date[]" placeholder="Start Date">
+        <input type="date" class="form-control mb-2" name="end_date[]" placeholder="End Date">
+        <textarea class="form-control mb-2" name="description[]" placeholder="Description"></textarea>
+      `;
+      experienceFields.appendChild(newField);
+    });
+  });
+</script>
+
 <script>
   $(document).ready(function() {
     // Disable district and city fields initially

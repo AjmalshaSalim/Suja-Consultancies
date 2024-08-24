@@ -29,7 +29,8 @@ class Qualification(models.Model):
 
     def __str__(self):
         return f"{self.user.user.username} - {self.id}"
-    
+    class Meta:
+        unique_together = ('user', 'degree', 'institution')
 
 class Experience(models.Model):
     user = models.ForeignKey(ExtendedUserModel, on_delete=models.CASCADE, related_name='experiences')
@@ -38,7 +39,10 @@ class Experience(models.Model):
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     description = models.TextField()
+    class Meta:
+        unique_together = ('user', 'company', 'position', 'start_date')
 
+        
 class Clients(models.Model):
     def __str__(self):
         return f"{self.added_by.username} - {self.company_name}"

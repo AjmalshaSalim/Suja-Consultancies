@@ -179,3 +179,4 @@ YOUR_EMAIL = 'info@sujaconsultancy.com'
 
 # Optional: Debug email issues in development
 EMAIL_DEBUG = True
+
