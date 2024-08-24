@@ -6,8 +6,9 @@ app_name = 'ageis_app'
 urlpatterns = [
     path('', views.index, name='index'),
     path('login', views.email_submission, name='login'),
-    path('adminlogin', views.login, name='login'),
-    path('logout', views.logout, name='logout'),
+    path('adminlogin', views.login, name='adminlogin'),
+    path('adminlogout', views.logout, name='adminlogout'),
+    path('logout', views.user_logout, name='logout'),
     path('forgot-password', views.forgot_password,name='forgot_password'),
     path('reset-password/<str:uidb64>/<str:token>/', views.reset_password,name='reset_password'),
     

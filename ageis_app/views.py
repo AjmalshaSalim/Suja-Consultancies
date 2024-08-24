@@ -15,9 +15,21 @@ from django.contrib.auth import authenticate, login
 
 def index(request):
     recent_jobs = []
+    whatsapp = None
     if request.user.is_authenticated:
         user = request.user
         recent_jobs = RecentlySearchedJobs.objects.filter(user=user).order_by('-search_date')
+
+        extended_user_qs = ExtendedUserModel.objects.filter(user=user)
+        if extended_user_qs.exists():
+            print('extended_user_qs')
+            extended_user = extended_user_qs.first()
+                
+                # Check the phone field
+            if not extended_user.phone:
+                    print('not extended_user.phone')
+                    whatsapp = 'email'
+        print('whatsapp',whatsapp)
     
     job_posted_count = Jobs.objects.all().count()
     applied_jobs_count = AppliedJobs.objects.all().count()
@@ -51,12 +63,7 @@ def index(request):
     # Top 20 most-applied jobs
     most_applied_jobs = Jobs.objects.filter(application_count__gt=0).order_by('-application_count')[:20]
 
-    if 'email' in request.session and 'otp' in request.session and not user.phone:
-        whatsapp = 'email'
-    else:
-        whatsapp = None
-
-
+    
     context = {
         'companies': companies,
         'jobs': jobs,
@@ -101,8 +108,7 @@ def submit_whatsapp_number(request):
             messages.success(request, 'Your WhatsApp number has been saved.')
 
             # Remove 'whatsapp' from session so the modal doesn't show again
-            request.session.pop('email', None)
-            request.session.pop('otp', None)
+            
         else:
             messages.error(request, 'Please enter a valid WhatsApp number.')
 
@@ -157,9 +163,6 @@ def email_submission(request):
         email = request.POST.get('email')
         
         # Check if the email is already registered (optional)
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email is already registered.')
-            return redirect('ageis_app:email_submission')
 
         # Generate OTP
         otp = get_random_string(length=6, allowed_chars='0123456789')
@@ -167,7 +170,8 @@ def email_submission(request):
         # Save OTP to the session
         request.session['email'] = email
         request.session['otp'] = otp
-        
+        print("session email", request.session['email'])
+        print("session otp", request.session['otp'])
         # Send OTP to the email
         send_mail(
             'Your OTP Code',
@@ -192,9 +196,8 @@ def otp_verification(request):
         
         # Get the OTP from the session
         otp_saved = request.session.get('otp')
-        print("otp_saved", otp_saved)
-        print("otp_entered", otp_entered)
-        
+        print('otp_entered',otp_entered)
+        print('otp_saved',otp_saved)
         if otp_saved and otp_entered == otp_saved:
             # Check if the user already exists
             if User.objects.filter(email=email).exists():
@@ -202,15 +205,19 @@ def otp_verification(request):
             else:
                 # Create a new user if they do not exist
                 username = email.split('@')[0]  # Simple username generation
-                password = otp_entered  # Set OTP as the password
-                user = User.objects.create_user(username=username, email=email, password=password)
+                user = User.objects.create_user(username=username, email=email, password='12345678')
+                extended_user = ExtendedUserModel.objects.create(user=user)
+            # Authenticate using the email (or username) and the user's actual password
             
-            # Authenticate using the plain-text password
-            user = authenticate(username=user.username, password=otp_entered)
+            user = authenticate(username=user.username, password='12345678')
+            print(user)
             if user is not None:
                 auth_login(request, user)  # Use auth_login to avoid the conflict
                 messages.success(request, 'OTP verified and logged in successfully.')
+                request.session.pop('email', None)
+                request.session.pop('otp', None)
                 return redirect('ageis_app:index')  # Redirect to home or another page
+
             else:
                 messages.error(request, 'Authentication failed.')
         else:
@@ -430,7 +437,11 @@ def logout(request):
         print(request.session)
     return redirect('ageis_app:index')
 
-
+from django.contrib.auth import logout as auth_logout
+def user_logout(request):
+    # Use Django's built-in logout function to log the user out
+    auth_logout(request)
+    return redirect('ageis_app:index')
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
