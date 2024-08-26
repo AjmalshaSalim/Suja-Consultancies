@@ -62,6 +62,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
 
 <style>
@@ -77,7 +79,7 @@
     background:#3186db !important; 
 }
 .img-h2, .bg-h3{
-    font-family: "Paytone One", sans-serif !important;
+    font-family: "Anton", sans-serif !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
 }
@@ -277,7 +279,7 @@ margin: auto;
                             </a>
                             {% if user.is_authenticated and not user.is_superuser %}
                             <ul class="dropdown-menu dropdown-bg" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item">{{user.username}}</a></li>
+                                <li><a class="dropdown-item"  href="{% url 'ageis_app:user_profile' %}">{{user.username}}</a></li>
                                 {%if user.extenedusermodel.phone%}
                                 <li><a class="dropdown-item ">{{user.extenedusermodel.phone}}</a></li>
                                 {% endif %}
@@ -421,9 +423,9 @@ margin: auto;
 
     <section class="page-title title-bg15">
         <div class="home-video-bg">
-            <video autoplay loop muted plays-inline class="back-video">
+            <!-- <video autoplay loop muted plays-inline class="back-video">
                 <source src="{% static 'assets/bg-video/clients.mp4' %}" type="video/mp4">
-            </video>
+            </video> -->
         </div>
         <div class="d-table">
             <div class="d-table-cell">

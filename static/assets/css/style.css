@@ -23,7 +23,7 @@ body {
   pointer-events: none;
 }
 .navbar-brand {
-  margin-right: 12rem !important;
+  margin-right: 12rem ;
   margin-left: 1rem !important;
 }
 /* img {

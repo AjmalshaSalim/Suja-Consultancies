@@ -282,7 +282,6 @@ color:#707070;
    }
 h2,h3,h4,h5,h6{
     color: rgb(0, 0, 0) !important;
-    font-family: 'Poppins',sans-serif;
 /* font-weight: 200;  */
  }
  h3{
@@ -643,7 +642,6 @@ background-size: cover;
   margin-right:auto;
 	margin-top: 11%!important;
     margin-bottom: 20% !important;
-    font-family: "Suranna", serif;
   font-weight: 500;
     letter-spacing: 5px;
     animation-name: animate;
@@ -731,11 +729,11 @@ font-weight: 200;
     color: #1b61a6;
 }
 .log-color :hover{
-    color: #CD201F !important;
+    color: #f5bd46 !important;
 }
 .font-color{
     /* color: #42a1ff !important; */
-    font-family: "Paytone One", sans-serif !important;
+    font-family: "Anton", sans-serif !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
     animation: colorChange 5s infinite;
@@ -873,10 +871,10 @@ border-radius: 100%;
     color: rgb(255, 0, 0);
    } */
    .email-a:hover{
-    color:#f4de1a!important;
+    color:#f5bd46!important;
    }
    .phn-a:hover{
-    color:#f4de1a !important;
+    color:#f5bd46 !important;
    }
 
    .footer-area{
@@ -889,7 +887,7 @@ border-radius: 100%;
     font-size: small;
    }
    .footer-sec2-a{
-    color: #f4de1a;
+    color: #f5bd46;
    }
    .footer-sec2-a:hover{
     color: white;

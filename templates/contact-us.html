@@ -54,6 +54,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         body, p, h3, a, span, p, button, ::placeholder{
     /* font-family: "Josefin Sans", sans-serif !important; */
@@ -67,7 +69,7 @@
     background:#3186db !important; 
 }
 .img-h2, .bg-h3{
-    font-family: "Paytone One", sans-serif !important;
+    font-family: "Anton", sans-serif !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
 }
@@ -80,6 +82,30 @@
     position: absolute;
     top: 10px;
 }
+.page-title {
+    position: relative;
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.596); /* Black with 50% opacity */
+    z-index: 1;
+}
+
+.d-table-cell {
+    position: relative;
+    z-index: 2; /* Ensures the text is above the overlay */
+}
+
+.img-h2, .bg-h3, ul li a, ul li {
+    color: white; /* Ensure the text is visible over the dark overlay */
+}
+
     </style>
 
 </head>
@@ -243,7 +269,7 @@
                             </a>
                             {% if user.is_authenticated and not user.is_superuser %}
                             <ul class="dropdown-menu dropdown-bg" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item">{{user.username}}</a></li>
+                                <li><a class="dropdown-item"  href="{% url 'ageis_app:user_profile' %}">{{user.username}}</a></li>
                                 {%if user.extenedusermodel.phone%}
                                 <li><a class="dropdown-item ">{{user.extenedusermodel.phone}}</a></li>
                                 {% endif %}
@@ -381,16 +407,17 @@
         </div>
         </div>
     </nav>
-     <section class="page-title title-bg23 banner-bg-11">
-        <div class="home-video-bg">
+    <section class="page-title title-bg23 banner-bg-11" style="height: 600px; background-image: url(../static/assets/bg-video/);">
+        <div class="overlay"></div> <!-- Black overlay -->
+        <!-- <div class="home-video-bg">
             <video autoplay loop muted plays-inline class="back-video">
                 <source src="{% static 'assets/bg-video/contactUs.mp4' %}" type="video/mp4">
             </video>
-        </div>
+        </div> -->
         <div class="d-table">
             <div class="d-table-cell">
-                <h2  class="img-h2">Contact Us</h2>
-                <h3 class="mb-3 bg-h3" ><span class="font-big">"R</span>each out to us for <span class="font-color">inquiries</span> or comments"</h3>
+                <h2 class="img-h2">Contact Us</h2>
+                <h3 class="mb-3 bg-h3"><span class="font-big">"R</span>each out to us for <span class="font-color">inquiries</span> or comments"</h3>
                 <ul>
                     <li>
                         <a href="{% url 'ageis_app:index' %}">Home</a>
@@ -405,6 +432,7 @@
             <div class="line"></div>
         </div>
     </section>
+    
 
     <div class="contact-card-section ptb-100">
         <div class="container">

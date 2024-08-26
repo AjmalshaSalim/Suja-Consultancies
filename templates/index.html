@@ -70,6 +70,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
     <style>
 
 body, p, h2, h3, a, span, p, button, ::placeholder{
@@ -84,8 +87,10 @@ body, p, h2, h3, a, span, p, button, ::placeholder{
     background:#3186db !important; 
 }
 h1{
-    font-family: "Paytone One", sans-serif !important;
+    /* font-family: "Paytone One", sans-serif !important; */
     text-transform: uppercase;
+    font-family: "Anton", sans-serif !important;
+    
 }
 .custom-carousel-container{
     width: 100%;
@@ -176,7 +181,29 @@ h1{
             height: 100%;
             width: 200%;
         }
-        
+        .carousel-item {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.596); /* Black with 50% opacity */
+    z-index: 1;
+}
+
+.col-div {
+    position: relative;
+    z-index: 2; /* Ensures the text is above the overlay */
+}
+
+.carosel-head {
+    color: white; /* Make sure text is visible over the dark overlay */
+}
+
     </style>
 </head>
 
@@ -202,11 +229,11 @@ h1{
             </div>
         </div>
     </div>
-    <div class="home-video-bg">
+    <!-- <div class="home-video-bg">
         <video autoplay loop muted plays-inline class="back-video" id="bg-home-video">
             <source src="{% static 'assets/bg-video/home-page.mp4' %}" type="video/mp4">
         </video>
-    </div>
+    </div> -->
 
 
 
@@ -256,28 +283,7 @@ h1{
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'ageis_app:clients' %}">Clients</a>
                     </li>
-                    <!-- {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'ageis_app:user_profile' %}">My Profile</a>
-                    </li>
-                    {% else %}
-                    <p></p>
-                    {% endif %} -->
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Services
-                        </a>
-                        <ul class="dropdown-menu dropdown-bg" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item dropdown-link"
-                                    href="{% url 'ageis_app:resume_writing' %}">Resume Writing</a></li>
-                            <li><a class="dropdown-item dropdown-link"
-                                    href="{% url 'ageis_app:interviewtips' %}">Interview Tips</a></li>
-                        </ul>
-                    </li> -->
-                    <!-- <li class="nav-item">
-                        {% comment %} <a class="nav-link" href="{% url 'ageis_app:blogs' %}">Blog</a> {% endcomment %}
-                    </li> -->
+                    
                     <li class="nav-item">
                         <a href="{% url 'ageis_app:contact_us' %}" class="nav-link">
                             Contact Us</a>
@@ -291,7 +297,7 @@ h1{
                         </div>
                     </form>
                 </ul>
-                <div class="chat-box" id="chat-box">
+                <!-- <div class="chat-box" id="chat-box">
                     <div class="chat-box-head">
 
                         <img class="logo-chat-box-1" src="{% static 'assets/images/suja.jpg' %}">
@@ -318,15 +324,15 @@ h1{
                     </div>
 
 
-                </div>
+                </div> -->
                 <a class=" btn-hello " id="chatwithus">
                     <div class="chat-toggle-container">
                         <img class="chat toggle-icon" src="../static/assets/icons/whatsapp.png" alt="">
                     </div>
                 </a>
                 {% if not user.is_authenticated %}
-                <div class="nav-item">
-                    <a class="nav-link log-color" href="{% url 'ageis_app:login' %}">Login</a>
+                <div class="nav-item" style="margin-bottom: 15px;">
+                    <a class="nav-link log-color" href="{% url 'ageis_app:login' %}"><button style="background: #3186db; padding-top: 5px; padding-bottom:5px; padding-left: 10px; padding-right: 10px; color: #fff;"> Sign In</button></a>
                 </div>
                 {% else %}
                 <div>
@@ -336,13 +342,18 @@ h1{
                                 aria-expanded="false">
                                 <!-- <i class="bi bi-person-circle"></i> -->
                                  <div style="height: 100%; width: 40px; margin-top:-13%; padding-left: 20px;">
-                                    <img src="../static/assets/icons/profile.png" alt="" style="width: 40px; height:40px; bottom:15px;">
+                                    
+                                    {% if user.profile_photo %}
+                                    <img src="{{ user.profile_photo.url }}" style="width: 40px; height:40px; bottom:15px;">
+                                   {% else %}
+                                   <img src="../static/assets/icons/profile.png" alt="" style="width: 40px; height:40px; bottom:15px;">
+                                   {% endif %}
                                  </div>
                                  
                             </a>
                             {% if user.is_authenticated and not user.is_superuser %}
                             <ul class="dropdown-menu dropdown-bg" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item">{{user.username}}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'ageis_app:user_profile' %}">{{user.username}}</a></li>
                                 {%if user.extenedusermodel.phone%}
                                 <li><a class="dropdown-item ">{{user.extenedusermodel.phone}}</a></li>
                                 {% endif %}
@@ -368,14 +379,14 @@ h1{
                     src="{% static 'assets/images/suja-logo.png'  %}"></a>
             <div class="nav-width">
                 <ul class="navbar-nav navbar-nav-1">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link btn-hello " id="chat-with-us">
                             Chat with Us</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         {% if not user.is_authenticated %}
-                        <div class="nav-item">
-                            <a class="nav-link log-color" href="{% url 'ageis_app:login' %}">Login</a>
+                        <div class="nav-item" style=" text-align: right;">
+                            <a class="nav-link log-color" href="{% url 'ageis_app:login' %}" style=""> <button style="background: #3186db; padding: 10px; color: #fff;"> Sign In</button></a>
                         </div>
                         {% else %}
                         <div>
@@ -408,12 +419,12 @@ h1{
                         <div>
                             {% endif %}
                     </li>
-                    <li class="nav-item toogle-icon-div">
-                        <a href="#" class="toogle-icon-a"><i class="bi bi-card-text toogle-icon"></i></a>
+                    <li class="nav-item toogle-icon-div" style="margin-top: 5px;">
+                        <a href="#" class="toogle-icon-a"><i class="bi bi-list" style="font-size: 30px;"></i></a>
                     </li>
                 </ul>
             </div>
-            <div class="chat-box" id="chat-box-mob">
+            <!-- <div class="chat-box" id="chat-box-mob">
                 <div class="chat-box-head">
 
                     <img class="logo-chat-box-1" src="{% static 'assets/images/suja.jpg' %}">
@@ -436,7 +447,7 @@ h1{
                     <input type="text" class="form-control w-75" id="chat-input-mob" placeholder="Chat with me">
                     <div id="send-it-mob"><i class="bi bi-arrow-right-circle-fill chat-send"></i></div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="toogle-div">
             <div class="close-icon-div">
@@ -480,73 +491,75 @@ h1{
         </div>
         </div>
     </nav>
-    <div id="carouselExampleSlidesOnly" class="carousel slide carosel-main" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
-                            <div class="col-div">
-                                <h1 class="carosel-head">Get Recruited to the <span class="font-color">Professional Companies</span> and make your
-                                    dream come true</h1>
+    
+        <div id="carouselExampleSlidesOnly" class="carousel slide carosel-main" data-bs-ride="carousel" style="background-image: url(../static/assets/bg-video/HomeBanner.jpg);">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="overlay"></div> <!-- Black overlay -->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
+                                <div class="col-div">
+                                    <h1 class="carosel-head">Get Recruited to the <span class="font-color">Professional Companies</span> and make your dream come true</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
-                            <div class="col-div">
-                                <h1 class="carosel-head">Sourcing & finding <span class="font-color">relevant & talented</span> people for your organisation is
-                                    one of the most important things these days.”</h1>
+                <div class="carousel-item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
+                                <div class="col-div">
+                                    <h1 class="carosel-head">Sourcing & finding <span class="font-color">relevant & talented</span> people for your organisation is
+                                        one of the most important things these days.”</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
+    
                 </div>
-
-            </div>
-            <div class="carousel-item">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
-                            <div class="col-div">
-                                <h1 class="carosel-head">We're Your <span class="font-color">HR Partner</span> for a Brighter Tomorrow</h1>
+                <div class="carousel-item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
+                                <div class="col-div">
+                                    <h1 class="carosel-head">We're Your <span class="font-color">HR Partner</span> for a Brighter Tomorrow</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
+    
                 </div>
-
-            </div>
-            <div class="carousel-item">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
-                            <div class="col-div">
-                                <h1 class="carosel-head">Believe that there are no limitations, no barriers to your success you will
-                                    be empowered and you will achieve.</h1>
+                <div class="carousel-item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
+                                <div class="col-div">
+                                    <h1 class="carosel-head">Believe that there are no limitations, no barriers to your success you will
+                                        be empowered and you will achieve.</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
+    
                 </div>
-
-            </div>
-            <div class="carousel-item">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
-                            <div class="col-div">
-                                <h1 class="carosel-head">Choose a job you love, and you will never have to work a day in your
-                                    life.</h1>
+                <div class="carousel-item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-12 col-xl-10 col-lg-10 col-xxl-10">
+                                <div class="col-div">
+                                    <h1 class="carosel-head">Choose a job you love, and you will never have to work a day in your
+                                        life.</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
+    
                 </div>
-
             </div>
         </div>
-
+        
         <!-- Job Search -->
 
         <!-- <div class="find-section pb-100">
@@ -1038,29 +1051,27 @@ h1{
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" style="background:#3fc74d;">
-                
-                <!-- <h5 class="modal-title" id="whatsappModalLabel">Whatsapp</h5> -->
                 <img src="../static/assets/images/Wpp.png" style="height: 50px; width: 50px;" alt="">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 40px; color: white;">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form method="POST" action="{% url 'ageis_app:submit_whatsapp_number' %}">
                 {% csrf_token %}
-                <div class="modal-body" style="background: #defce2;">
+                <div class="modal-body" style="background: #ffffff;">
                     <div class="form-group">
-                       
                         <input type="text" class="form-control" id="whatsapp_number" name="whatsapp_number" placeholder="Enter your whatsapp number..." required style="font-size: small;">
                     </div>
                 </div>
-                <div class="modal-footer" style="background: #defce2;">
-                    <button type="button" class="btn btn-secondary" style="border: none; border-radius: 0%; font-size: small;" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" style="background: #2176ca; border: none; border-radius: 0%; font-size: small;">Submit</button>
+                <div class="modal-footer" style="background: #ffffff; border-top: none;">
+                
+                    <button type="submit" class="btn btn-primary" style="background: #5ab93d; border: none; border-radius: 0%; font-size: small;">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 {% endif %}
 
 <footer class="footer-area pt-100 pb-70 bg-light">
@@ -1096,18 +1107,6 @@ h1{
                                         Resume writing
                                     </a>
                             </li>
-                            <!-- <li>
-                                <a class="text-dark" href="internship.html">
-                                    <i class="bx bx-chevrons-right bx-tada"></i>
-                                    Internship
-                                </a>
-                            </li>
-                            <li>
-                                <a class="text-dark" href="Aboardstudy.html">
-                                    <i class="bx bx-chevrons-right bx-tada"></i>
-                                    Aboard study
-                                </a>
-                            </li> -->
                             <li>
                                 <a class="text-dark" href="{% url 'ageis_app:interviewtips' %}">
                                     <i class="bx bx-chevrons-right bx-tada"></i>
@@ -1315,18 +1314,18 @@ h1{
             {% endif %}
         });
     </script>
+    
     <script>
         $(document).ready(function () {
-            $(".close-btn").click(function () {
-                $("#chat-box").hide();
-                // $(".btn-whatsapp").show();
-            })
-            $(".btn-hello").click(function () {
-                // $(".btn-whatsapp").hide();
-                $("#chat-box").show();
-            })
-        })
+            // This section is unnecessary for closing the modal since Bootstrap handles it via data-dismiss="modal"
+            
+            // If you need custom close functionality
+            $("#whatsappModal .close").click(function () {
+                $("#whatsappModal").modal('hide');
+            });
+        });
     </script>
+    
     <script>
         const messages = [
             "Get Recruited to the Professional Companies and make your dream come| true",

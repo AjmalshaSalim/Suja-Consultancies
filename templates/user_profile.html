@@ -59,6 +59,7 @@
        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
        <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
        <style>
            body, p, h3, a, span, p, button, ::placeholder{
        /* font-family: "Josefin Sans", sans-serif !important; */
@@ -157,7 +158,7 @@
                         <div class="nav-search-box" style="width: 250px; height: 40px; background: #fff; display: flex; border: 1px solid #00000024; border-radius: 5px; margin-left: 25px;
 ">
                             <input href="" class="nav-search-input" placeholder="Search" style="border:none; margin-left:5px; outline:none;">
-                            <img src="../static/assets/icons/search.png" alt="" style="width:20px; height:20px; margin-top:7px; margin-left:7px;">
+                            <img src="{% static 'assets/icons/search.png' %}" alt="" style="width:20px; height:20px; margin-top:7px; margin-left:7px;">
                                 </input>
                         </div>
                         
@@ -198,7 +199,11 @@
                 </a>
                 {% if not user.is_authenticated %}
                 <div class="nav-item">
-                    <a class="nav-link log-color" href="{% url 'ageis_app:login' %}">Login</a>
+                    {% if user.profile_photo %}
+                    <img src="{{ user.profile_photo.url }}" style="width: 40px; height:40px; bottom:15px; border-radius: 100%;">
+                   {% else %}
+                   <img src="../static/assets/icons/profile.png" alt="" style="width: 40px; height:40px; bottom:15px;">
+                   {% endif %}
                 </div>
                 {% else %}
                 <div>
@@ -352,29 +357,28 @@
         </div>
         </div>
     </nav> 
-    <div class="profile-page container mt-5">
+    <div class="profile-page container mt-5" style="background: rgb(229, 241, 243); border-radius: 20px;">
         <div class="section-1">
-            <div class="prfl-detail">
+            <div class="prfl-detail" style=" width: 60%; margin-left: 200px;">
                 <div class="profile-img-div">
                     {% if user.profile_photo %}
                      <img src="{{ user.profile_photo.url }}" class="profile-img" id="prfl-pic">
                     {% else %}
-                    <img src="{% static 'images/default_profile.jpg' %}" class="profile-img" id="prfl-pic">
+                    <img src="{% static 'assets/icons/profile.png' %}" class="profile-img" id="prfl-pic">
                     {% endif %}
                 </div>
-                <div class="prfl-name-detail">
+                <div class="prfl-name-detail"  style=" width: 100%;">
                     <h3 class="prfl-detail-h3"><span class="first-name-class me-3" id="prfl-firstname">{{user.user.first_name}} {{user.user.last_name}}</span><span
 
                     <div class="experience-key">
-                        <h4 class="prfl-detail-h4" id="prfl-position">{{user.position}}</h4>
-                        <h5 class="prfl-detail-h5"><a href="#" class="text-dark"
-                                id="prfl-company">{{user.comapany_univercity}}</a></h5>
+                        <h4 class="prfl-detail-h4" id="prfl-position"><i class="fa-solid fa-briefcase"></i>&nbsp;&nbsp;&nbsp; {{user.position}}</h4>
+                        <h4 class="prfl-detail-h4" id="prfl-position"><a href="#" class="text-dark"
+                                id="prfl-company"><i class="fa-solid fa-school"></i>&nbsp;&nbsp; {{user.comapany_univercity}}</a></h4>
                     </div>
                 </div>
             </div>
-            <div class="edit-btn-div">
-                <a class="btn btn-special edit-prfl-btn" id="edit-prfl-btn"><i
-                        class="bi bi-pencil-square me-2"></i>Edit</a>
+            <div class="edit-btn-div" style="position: absolute; right: 27.1%; top: 30%;">
+                <a class="btn btn-special edit-prfl-btn" id="edit-prfl-btn">Edit &nbsp;&nbsp;&nbsp; <i class="fa-solid fa-pen"></i></a>
             </div>
 
             <div class="form-div" id="name-update">
@@ -418,28 +422,26 @@
             </div>
         </div>
 
-        <div class="prfl-contact-info mt-5">
+        <div class="prfl-contact-info mt-5" >
             <div class="prfl-edit-btn">
                 <h3 class="prfl-contact-h3">Contact info</h3>
-                <div class="edit-btn-div">
-                    <a class="btn btn-special edit-prfl-btn" id="edit-contact-btn"><i
-                            class="bi bi-pencil-square me-2"></i>Edit</a>
+                <div class="edit-btn-div" style="margin-bottom: 50px;">
+                    <a class="btn btn-special edit-prfl-btn" id="edit-contact-btn">Edit &nbsp;&nbsp;&nbsp; <i class="fa-solid fa-pen"></i></a>
                 </div>
             </div>
-            <div class="prfl-contact-mob-email">
+            <div class="prfl-contact-mob-email" style="margin-bottom: -30px;">
                 
                 <div class="prfl-contact-mob">
-                    <h6><span class="contact-email"><i
-                                class="bi bi-telephone-outbound me-2 text-danger"></i></span><span
-                            class="contact-mob-num" id="prfl-number">{{user.phone}}</span></h6>
+                    <h6><span class="contact-email"><i class="fa-solid fa-mobile"></i></span><span
+                            class="contact-mob-num" id="prfl-number">&nbsp;&nbsp;{{user.phone}}</span></h6>
                 </div>
                 <div class="prfl-contact-mob">
-                    <h6><span class="contact-email"><i class="bi bi-geo-alt me-2 text-danger"></i></span><span
-                            class="contact-mob-num" id="prfl-location">{{user.location}}</span></h6>
+                    <h6><span class="contact-email"><i class="fa-solid fa-location-dot"></i></span><span
+                            class="contact-mob-num" id="prfl-location">&nbsp;&nbsp;{{user.location}}</span></h6>
                 </div>
                 <div class="prfl-contact-email">
-                    <h6><span class="contact-email "><i class="bi bi-envelope me-2 text-danger"></i></span><span
-                            class="contact-mob-email" id="prfl-email">{{user.user.email}}</span></h6>
+                    <h6 style="display: flex;"><span class="contact-email "><i class="fa-solid fa-envelope"></i></span><span
+                            class="contact-mob-email" id="prfl-email">&nbsp;&nbsp;{{user.user.email}}</span></h6>
                 </div>
             </div>
         </div>
@@ -476,12 +478,12 @@
 
         <div class="prfl-contact-info mt-5">
             <div class="prfl-edit-btn">
-                <h3 class="prfl-contact-h3">Education</h3>
+                <h3 class="prfl-contact-h3">Qualifications</h3>
                 <div class="edit-btn-div" id="prfl-add-btn">
-                    <a class="btn btn-special edit-prfl-btn"><i class="bi bi-pencil-square me-2"></i>Add</a>
+                    <a class="btn btn-special edit-prfl-btn">Add &nbsp;&nbsp;&nbsp;<i class="fa-solid fa-plus"></i></a>
                 </div>
             </div>
-            <div class="prfl-education container" id="append">
+            <div class="prfl-education container" id="append" style="margin-top: 30px;">
                 {% for qualification in qualifications %}
                 <div class="row row-edu eachrow">
                     <h2 class="education-header"12 col-xl-3 col-lg-3 col-md-12 col-sm-12id="prfl-header">{{ qualification.degree }}</h2>
@@ -506,7 +508,7 @@
                         </div> {% endcomment %}
                         <div class="post-graduation">
                             <h5 class="cgpa-h5 education-delete-btn" id=""><a href="{% url 'ageis_app:delete_qualification' qualification.id %}">
-                                <i class="bi bi-trash me-2"></i>
+                                <i class="fa-solid fa-trash"></i>
                             </a></h5>
                         </div>
                     </div>
@@ -524,18 +526,18 @@
                 <form method="post" action="{% url 'ageis_app:add_qualification' %}" id="user-edit-form" enctype="multipart/form-data">
                     {% csrf_token %}
                 <div class="input-div">
-                    <span class="error-text" id="error-notification-qualification">please enter your
-                        Qualifiaction</span>
+                    <span class="error-text" id="error-notification-qualification">Enter your
+                        qualifiaction</span>
                     <input type="text" name="qulification" class="form-control form-control-update"  id="qulification"
                         placeholder="Enter your Qualification" required>
                 </div>
                 <div class="input-div">
-                    <span class="error-text" id="error-notification-university">Please enter your University</span>
+                    <span class="error-text" id="error-notification-university">Enter the University</span>
                     <input type="text" name="university" class="form-control form-control-update" id="university"
                         placeholder="Enter your University" required>
                 </div>
                 <div class="input-div">
-                    <span class="error-text" id="error-notification-percentage">Please enter Passout Yea</span>
+                    <span class="error-text" id="error-notification-percentage">Enter the year of passout</span>
                     <input type="text" name="year" class="form-control form-control-update" id="year"
                         placeholder="Enter Passout Year" required>
                 </div>
@@ -550,15 +552,14 @@
             <div class="prfl-edit-btn">
                 <h3 class="prfl-contact-h3">Skills</h3>
                 <div class="edit-btn-div" id="skill-edit-btn">
-                    <a class="btn btn-special edit-prfl-btn"><i class="bi bi-pencil-square me-2"></i>Add</a>
+                    <a class="btn btn-special edit-prfl-btn">Add &nbsp;&nbsp;&nbsp;<i class="fa-solid fa-plus"></i></a>
                 </div>
             </div>
             {% if skills %}
             <div class="prfl-education container">
                 <ul id="linkList">
                     {% for skill in skills%}
-                    <li class="link" id="skill-list">{{skill.skill}}<a href="{% url 'ageis_app:delete_skill' skill.id %}" class="delete"><i
-                                class="bi bi-trash3 ms-3"></i></a></li>
+                    <li class="link" id="skill-list">{{skill.skill}}<a href="{% url 'ageis_app:delete_skill' skill.id %}" class="delete">&nbsp;&nbsp;<i class="fa-solid fa-trash"></i></a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -582,11 +583,11 @@
                 </div>
             </div>
 
-            <div class="prfl-contact-info mt-5">
+            <div class="prfl-contact-info mt-5" style="width: 100%;">
                 <div class="prfl-edit-btn">
                     <h3 class="prfl-contact-h3">Experience</h3>
                     <div class="edit-btn-div" id="experience-add">
-                        <a class="btn btn-special edit-prfl-btn"><i class="bi bi-pencil-square me-2"></i>Add</a>
+                        <a class="btn btn-special edit-prfl-btn">Add &nbsp;&nbsp;&nbsp;<i class="fa-solid fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="prfl-education container">
@@ -610,13 +611,13 @@
                         </div>
                         <div class="col-12 col-xl-3 col-sm-12 col-lg-3 col-md-12">
                             <div class="post-graduation">
-                                <p class="cgpa-p">{{experience.description}}</p>
+                                <p class="cgpa-p">{{experience.description}} Years Experience</p>
                             </div>
                         </div>
                         <div class="col-12 col-xl-2 col-md-12 col-sm-12 col-lg-2">
                             <div class="post-edit-btn">
                                 <p class="cgpa-p">
-                                    <a href="{% url 'ageis_app:delete_experience' experience.id %}"><i class="bi bi-trash3"></i></a>
+                                    <a href="{% url 'ageis_app:delete_experience' experience.id %}"><i class="fa-solid fa-trash"></i></a>
                                 </p>
                             </div>
                         </div>
@@ -633,30 +634,30 @@
                     <form method="post" action="{% url 'ageis_app:add_experience' %}" id="user-edit-form" enctype="multipart/form-data">
                         {% csrf_token %}
                     <div class="input-div">
-                        <span class="error-text" id="error-notification-com-name">Please enter Compnay name </span>
+                        <span class="error-text" id="error-notification-com-name">Company name </span>
                         <input type="text" name = 'experience-com'class="form-control form-control-update" id="experience-com"
-                            placeholder="Enter experienced company name" required>
+                            placeholder="Company name " required>
                     </div>
                     <div class="input-div">
-                        <span class="error-text" id="error-notification-position">Please enter your position</span>
+                        <span class="error-text" id="error-notification-position">Enter your position</span>
                         <input type="text" name = 'experience-position' class="form-control form-control-update" id="experience-position"
                             placeholder="Enter your position" required>
                     </div>
                     <div class="input-div">
-                        <span class="error-text" id="error-notification-start-date">Please enter your start date</span>
+                        <span class="error-text" id="error-notification-start-date">Start date (DD/MM/YYYY)</span>
                         <input type="text" name = 'experience-start-date' class="form-control form-control-update" id="experience-start-date"
-                            placeholder="Enter your experience start date" required>
+                            placeholder="Start date (DD/MM/YYYY)" required>
                     </div>
                     <div class="input-div">
-                        <span class="error-text" id="error-notification-end-date">Please enter your end date</span>
+                        <span class="error-text" id="error-notification-end-date">Start date (DD/MM/YYYY)</span>
                         <input type="text" name = 'experience-end-date' class="form-control form-control-update" id="experience-end-date"
-                            placeholder="Enter your end date" required>
+                            placeholder="Start date (DD/MM/YYYY)" required>
                     </div>
                     <div class="input-div">
-                        <span class="error-text" id="error-notification-com-detail">Please enter your experience
-                            details</span>
+                        <span class="error-text" id="error-notification-com-detail">Enter your experience
+                        </span>
                         <input type="text" name = 'experience-details' class="form-control form-control-update" id="experience-details"
-                            placeholder="Enter your details" required>
+                            placeholder="Years of experience  ( Eg : 2 )" required>
                     </div>
                     <div class="update-btn-div">
                         <button type="submit" class="update-btn btn btn-special" id="update-btn-name">Update</button>
@@ -665,11 +666,11 @@
                 </div>
             </div>
 
-            <div class="prfl-contact-info mt-5">
+            <div class="prfl-contact-info mt-5" style="width: 100%;">
                 <div class="prfl-edit-btn">
                     <h3 class="prfl-contact-h3">Resume</h3>
                     <div class="edit-btn-div" id="resume-add">
-                        <a class="btn btn-special edit-prfl-btn"><i class="bi bi-pencil-square me-2"></i>Change</a>
+                        <a class="btn btn-special edit-prfl-btn">Edit &nbsp;&nbsp;&nbsp; <i class="fa-solid fa-pen"></i></a>
                     </div>
                 </div>
                 <div class="prfl-education container">
@@ -706,8 +707,8 @@
             {% comment %} <div class="edit-btn-div logout mb-5">
                 <a class="btn btn-special edit-prfl-btn" href="./change-password.html" ><i class="bi bi-pencil-square me-2"></i>Change password</a>
             </div> {% endcomment %}
-            <div class="edit-btn-div logout">
-                <a class="btn btn-special edit-prfl-btn" href="{% url 'ageis_app:logout' %}" ><i class="bi bi-pencil-square me-2"></i>log out</a>
+            <div class="edit-btn-div logout" style="margin-top: 20px;">
+                <a class="btn btn-danger edit-prfl-btn" href="{% url 'ageis_app:logout' %}" style="padding: 10px;" ><i class="bi bi-pencil-square me-2"></i>log out</a>
             </div>
         </div>
         </div>

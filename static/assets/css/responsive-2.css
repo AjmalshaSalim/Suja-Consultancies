@@ -2335,7 +2335,9 @@
     .brand-logo-a {
         width: 23%;
     }
-
+    .navbar-brand {
+        margin-right: 1rem;
+      }
     .brand-logo {
         width: 100%;
     }
@@ -2693,7 +2695,9 @@
     .brand-logo-a {
         width: 23%;
     }
-
+    .navbar-brand {
+        margin-right: 1rem;
+      }
     .brand-logo {
         width: 100%;
     }
@@ -2944,7 +2948,9 @@
     .brand-logo-a {
         width: 23%;
     }
-
+    .navbar-brand {
+        margin-right: 1rem;
+      }
     .brand-logo {
         width: 100%;
     }
