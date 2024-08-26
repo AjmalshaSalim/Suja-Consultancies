@@ -380,48 +380,48 @@
 
 
                                                 </div>
-                                                    <form method="GET" class="mb-3">
-                                                  <div class="form-row">
-                                                    <div class="form-group col-md-2">
-                                                      <label for="skill">Skill</label>
-                                                      <input type="text" class="form-control" id="skill" name="skill" placeholder="Enter skill" value="{{ request.GET.skill }}">
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                      <label for="qualification">Qualification</label>
-                                                      <input type="text" class="form-control" id="qualification" name="qualification" placeholder="Enter qualification" value="{{ request.GET.qualification }}">
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                      <label for="experience">Experienced Profession</label>
-                                                      <input type="text" class="form-control" id="experience" name="experience" placeholder="Enter experience" value="{{ request.GET.experience }}">
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                      <label for="country">Country</label>
-                                                      <input type="text" class="form-control" id="country" name="country" placeholder="Enter country" value="{{ request.GET.country }}">
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                      <label for="state">State</label>
-                                                      <input type="text" class="form-control" id="state" name="state" placeholder="Enter state" value="{{ request.GET.state }}">
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                      <label for="district">District</label>
-                                                      <input type="text" class="form-control" id="district" name="district" placeholder="Enter district" value="{{ request.GET.district }}">
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                      <label for="location">City</label>
-                                                      <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" value="{{ request.GET.location }}">
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                      <label for="relocate">Relocate</label>
-                                                      <input type="checkbox" id="relocate" name="relocate" value="1" {% if request.GET.relocate %}checked{% endif %}>
-                                                    </div>
-                                                  </div>
-                                                  <button type="submit" class="btn btn-success">Filter</button>
-                                                </form>
-
+                                                   
 
 
                                            </div>
                                       </div>
+                                      <form method="GET" class="mb-3">
+                                        <div class="form-row">
+                                          <div class="form-group col-md-2">
+                                            <label for="skill">Skill</label>
+                                            <input type="text" class="form-control" id="skill" name="skill" placeholder="Enter skill" value="{{ request.GET.skill }}">
+                                          </div>
+                                          <div class="form-group col-md-2">
+                                            <label for="qualification">Qualification</label>
+                                            <input type="text" class="form-control" id="qualification" name="qualification" placeholder="Enter qualification" value="{{ request.GET.qualification }}">
+                                          </div>
+                                          <div class="form-group col-md-2">
+                                            <label for="experience">Experienced Profession</label>
+                                            <input type="text" class="form-control" id="experience" name="experience" placeholder="Enter experience" value="{{ request.GET.experience }}">
+                                          </div>
+                                          <div class="form-group col-md-2">
+                                            <label for="country">Country</label>
+                                            <input type="text" class="form-control" id="country" name="country" placeholder="Enter country" value="{{ request.GET.country }}">
+                                          </div>
+                                          <div class="form-group col-md-2">
+                                            <label for="state">State</label>
+                                            <input type="text" class="form-control" id="state" name="state" placeholder="Enter state" value="{{ request.GET.state }}">
+                                          </div>
+                                          <div class="form-group col-md-2">
+                                            <label for="district">District</label>
+                                            <input type="text" class="form-control" id="district" name="district" placeholder="Enter district" value="{{ request.GET.district }}">
+                                          </div>
+                                          <div class="form-group col-md-2">
+                                            <label for="location">City</label>
+                                            <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" value="{{ request.GET.location }}">
+                                          </div>
+                                          <div class="form-group col-md-2">
+                                            <label for="relocate">Relocate</label>
+                                            <input type="checkbox" id="relocate" name="relocate" value="1" {% if request.GET.relocate %}checked{% endif %}>
+                                          </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Filter</button>
+                                      </form>
 
                                     </div>
                                     <!-- /.card-header -->

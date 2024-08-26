@@ -302,7 +302,10 @@
                   <button onclick="updateResult('{{ applied_job.id }}', 'on_hold')" class="btn btn-warning">Hold</button>
                   {% elif applied_job.result == 'selected' %}
                   <button disabled class="btn btn-success">Selected</button>
-                  <button type="button" class="btn btn-primary" id="sendOfferLetterBtn_{{ applied_job.id }}">Send Offer Letter</button>
+                  <button  onclick="openOfferLetterPopup('{{ applied_job.id }}')" class="btn btn-success" >Send Offer Letter</button>
+                  
+                    
+                
                   {% elif applied_job.result == 'rejected' %}
                   <button disabled class="btn btn-danger">Rejected</button>
                   {% elif applied_job.result == 'on_hold' %}
@@ -323,6 +326,8 @@
           
         </div>
         
+
+
         <div id="popup" class="popup">
           <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
@@ -347,30 +352,34 @@
           </div>
         </div>
         
+
+
         <div id="offerLetterPopup" class="popup">
           <div class="popup-content">
-            <span class="close" onclick="closeOfferLetterPopup()">&times;</span>
-            <h2 class="mb-4">Send Offer Letter</h2>
-            <form id="offerLetterForm" onsubmit="sendOfferLetter('{{ applied_job_id }}'); return false;" class="mb-4" enctype="multipart/form-data">
-              {% csrf_token %}
-              <input type="hidden" id="applied_job_id" name="applied_job_id">
-              <div class="form-group">
-                <label for="offer_letter_file">Offer Letter PDF:</label>
-                <input type="file" id="offer_letter_file" name="offer_letter_file" class="form-control-file">
-              </div>
-              <div class="form-group">
-                <label for="email_subject">Email Subject:</label>
-                <input type="text" id="email_subject" name="email_subject" value="Offer Letter" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="email_body">Email Body:</label>
-                <textarea id="email_body" name="email_body" class="form-control" rows="5">Dear Candidate,\n\nWe are pleased to offer you the position...\n\nSincerely,\nThe Recruitment Team</textarea>
-              </div>
-              <button type="submit" onclick="sendOfferLetter('{{ applied_job_id }}')" class="btn btn-primary" id="sendOfferLetterBtn">Send Offer Letter</button>
-              <button id="openPopupButton" data-job-id="{{ applied_job_id }}">Send Offer Letter</button>
-            </form>
+              <span class="close" onclick="closeOfferLetterPopup()">&times;</span>
+              <h2 class="mb-4">Send Offer Letter</h2>
+              <form id="offerLetterForm" method="post" enctype="multipart/form-data"  action="{% url 'ageis_app:send_offer_letter' %}">
+                  {% csrf_token %}
+                  <input type="hidden" id="offerLetter_applied_job_id" name="applied_job_id">
+                  <div class="form-group">
+                    <label for="offer_letter_file">Offer Letter PDF:</label>
+                    <input type="file" id="offer_letter_file" name="offer_letter_file" class="form-control-file">
+                </div>
+                  <div class="form-group">
+                      <label for="email_subject">Email Subject:</label>
+                      <input type="text" id="email_subject" name="email_subject" value="Offer Letter" class="form-control">
+                  </div>
+                  <div class="form-group">
+                      <label for="email_body">Email Body:</label>
+                      <textarea id="email_body" name="email_body" class="form-control" rows="5">Dear Candidate,\n\nWe are pleased to offer you the position...\n\nSincerely,\nThe Recruitment Team</textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Send Offer Letter</button>
+              </form>
           </div>
-        </div>
+      </div>
+
+
+
         </div>
   </div>
   <!-- /.content-wrapper -->
@@ -472,18 +481,21 @@
       document.getElementById('popup').style.display = 'none';
     }
 let x= 0
-    function openOfferLetterPopup(jobId) {
-      console.log(jobId)
-      x=jobId
-      document.getElementById('applied_job_id').value = jobId;
-      document.getElementById('offerLetterPopup').style.display = 'block';
-    }
+function openOfferLetterPopup(appliedJobId) {
+  // Set the hidden input value with the job ID
+  document.getElementById('offerLetter_applied_job_id').value = appliedJobId;
+  console.log("Offer Letter ID is", document.getElementById('offerLetter_applied_job_id').value);
 
-    function closeOfferLetterPopup() {
-      document.getElementById('offerLetterPopup').style.display = 'none';
-    }
+  // Show the popup
+  document.getElementById('offerLetterPopup').style.display = 'block';
+}
 
-    $(document).ready(function() {
+
+function closeOfferLetterPopup() {
+  document.getElementById('offerLetterPopup').style.display = 'none';
+}
+
+    {% comment %} $(document).ready(function() {
       // Attach event listener to all "Send Offer Letter" buttons
       $('[id^=sendOfferLetterBtn]').click(function() {
         var jobId = $(this).attr('id').split('_')[1];
@@ -491,16 +503,12 @@ let x= 0
       });
     });
 
-    function sendOfferLetter(jobId) {
-      // Retrieve the jobId from the function parameter
-      let x = x
+    function sendOfferLetter() {
       var form = $('#offerLetterForm')[0];
       var formData = new FormData(form);
-      console.log(x,"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-      formData.append('applied_job_id',x );
-      console.log('formData', formData);
+  
       $.ajax({
-          url: `/send-offer-letter/`,
+          url: '/send-offer-letter/',  // Correct URL
           type: 'POST',
           data: formData,
           processData: false,
@@ -518,7 +526,9 @@ let x= 0
               alert('Error sending offer letter.');
           }
       });
-  }
+  } {% endcomment %}
+  
+  
 
     $(function () {
     $("#example1").DataTable({

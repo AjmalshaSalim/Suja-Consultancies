@@ -1244,8 +1244,10 @@ logger = logging.getLogger(__name__)
 
 def send_offer_letter(request):
     if request.method == 'POST':
+        logger.debug("Offer letter sent POST")
         applied_job_id = request.POST.get('applied_job_id')
         logger.debug(f'Received applied_job_id: {applied_job_id}')
+
         if not applied_job_id:
             logger.error('Applied job ID is empty')
             return JsonResponse({'success': False, 'error': 'Applied job ID is empty'})
@@ -1268,6 +1270,7 @@ def send_offer_letter(request):
         email_body = request.POST.get('email_body')
 
         if offer_letter_file:
+            logger.debug(f'File received: {offer_letter_file.name}, Type: {offer_letter_file.content_type}')
             applied_job.offer_letter = offer_letter_file
             applied_job.save()
 
@@ -1278,8 +1281,13 @@ def send_offer_letter(request):
             [candidate_email],
             reply_to=[settings.EMAIL_HOST_USER]
         )
+        
         if offer_letter_file:
-            email.attach(offer_letter_file.name, offer_letter_file.read(), offer_letter_file.content_type)
+            email.attach(
+                offer_letter_file.name,
+                offer_letter_file.read(),
+                offer_letter_file.content_type
+            )
 
         try:
             email.send(fail_silently=False)
@@ -1287,7 +1295,7 @@ def send_offer_letter(request):
             logger.error(f'Error sending email: {e}')
             return JsonResponse({'success': False, 'error': str(e)})
 
-        applied_job.result = 'offerletter_sent'
+        applied_job.result = 'offerletter_sent' 
         applied_job.save()
         return JsonResponse({'success': True})
 
