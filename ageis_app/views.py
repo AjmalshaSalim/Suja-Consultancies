@@ -1817,3 +1817,39 @@ def delete_experience_view(request, experience_id):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
 
 
+@login_required
+def staff_list(request):
+    staff_members = User.objects.filter(is_staff=True)
+
+    if request.method == 'POST':
+        if 'create_staff' in request.POST:
+            username = request.POST['username']
+            email = request.POST['email']
+            password = request.POST['password']
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.is_staff = True
+            user.save()
+
+            # Create associated extended user model
+            ExtendedUserModel.objects.create(user=user)
+
+        elif 'edit_staff' in request.POST:
+            staff_id = request.POST['staff_id']
+            staff_member = get_object_or_404(User, id=staff_id)
+            staff_member.username = request.POST['username']
+            staff_member.email = request.POST['email']
+            staff_member.save()
+
+            extended_user = staff_member.extenedusermodel
+            extended_user.phone = request.POST.get('phone', extended_user.phone)
+            extended_user.save()
+
+        return redirect('ageis_app:staff_list')
+
+    return render(request, 'staff_list.html', {'staff_members': staff_members})
+
+@login_required
+def delete_staff(request, staff_id):
+    staff_member = get_object_or_404(User, id=staff_id)
+    staff_member.delete()
+    return redirect('ageis_app:staff_list')

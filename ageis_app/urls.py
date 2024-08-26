@@ -125,4 +125,8 @@ urlpatterns = [
     path('otp-verification/', views.otp_verification, name='otp_verification'),
     path('resend-otp/', views.resend_otp, name='resend_otp'),
     path('submit_whatsapp_number/', views.submit_whatsapp_number, name='submit_whatsapp_number'),
+
+
+    path('staff/', views.staff_list, name='staff_list'),  # This handles the list, create, and edit actions
+    path('staff/delete/<int:staff_id>/', views.delete_staff, name='delete_staff'),  # This handles deletion
 ]
